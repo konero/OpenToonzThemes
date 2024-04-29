@@ -1,0 +1,55 @@
+/* -----------------------------------------------------------------------------
+   Keyframe Navigator
+----------------------------------------------------------------------------- */
+
+#keyFrameNavigator {
+  background: transparent;
+  margin: 0;
+  padding: 0;
+
+  #PreviousKey,
+  #NextKey,
+  #KeyNo,
+  #KeyPartial,
+  #KeyTotal {
+    margin: 0 2px;
+    padding-right: -1px;
+    width: 20px;
+    height: 20px;
+  }
+
+  #KeyNo {
+    background-color: @keyframe-off-color;
+    border: 1px solid @keyframe-off-border-color;
+  }
+
+  #KeyPartial {
+    background-color: @keyframe-partial-color;
+    border: 1px solid @keyframe-partial-border-color;
+  }
+
+  #KeyTotal {
+    background-color: @keyframe-total-color;
+    border: 1px solid @keyframe-total-border-color;
+  }
+
+  #KeyNo:hover {
+    background-color: @keyframe-off-color-hover;
+    border-color: @keyframe-off-border-color-hover;
+  }
+
+  #KeyPartial:hover {
+    background-color: @keyframe-partial-color-hover;
+    border-color: @keyframe-partial-border-color-hover;
+  }
+
+  #KeyTotal:hover {
+    background-color: @keyframe-total-color-hover;
+    border-color: @keyframe-total-border-color-hover;
+  }
+
+  & QToolButton#qt_toolbar_ext_button {
+    padding-bottom: 3px;
+    border-radius: 2px;
+  }
+}

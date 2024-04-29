@@ -1,0 +1,25 @@
+/* -----------------------------------------------------------------------------
+   Task Viewer
+----------------------------------------------------------------------------- */
+
+#TaskSheetItem,
+#tasksRemoveBox,
+#tasksAddBox {
+  .textfield-style();
+} 
+
+#TaskSheetItemLabel {
+  color: @normal-label-color;
+}
+
+#Tasks {
+  & QToolBar {
+    border-bottom: 1 solid @primary-border-color;
+    margin: 0;
+    padding: 0;
+
+    & QToolButton {
+      margin: 2 2 3 2;
+    }
+  }
+}

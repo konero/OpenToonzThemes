@@ -1,0 +1,12 @@
+/* -----------------------------------------------------------------------------
+   Custom Panel Widgets
+----------------------------------------------------------------------------- */
+
+MyScroller {
+  qproperty-ScrollerBGColor: if(lightness(@text-color) >= 50%,
+                               @ui-dark3,
+                               @ui-light3);
+  qproperty-ScrollerBorderColor: if(lightness(@text-color) >= 50%,
+                                   @ui-light6,
+                                   @ui-dark6);
+}
