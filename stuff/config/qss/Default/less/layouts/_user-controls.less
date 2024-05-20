@@ -51,8 +51,8 @@ QComboBox {
   }
 
   &:disabled {
-    background-color: mix(@button-bg-color, @ui-color, @disabled-amount);
-    border-color: mix(@ui-color, @button-border-color, @disabled-amount);
+    background-color: mix(@button-bg-color, @ui-color, @disabled-opacity);
+    border-color: mix(@button-border-color, @ui-color, @disabled-opacity);
     color: @text-color-disabled;
   }
 
@@ -68,7 +68,7 @@ QComboBox {
   &:editable {
     color: @input-text-color;
     background-color: @input-bg-color;
-    border-color: @primary-border-color;
+    border-color: @input-border-color;
     selection-background-color: @input-selection-bg-color;
     selection-color: @input-selection-text-color;
     padding: 1 0 1 3;
@@ -96,13 +96,13 @@ QComboBox {
       image: url('@{img-url}/combo_downarrow_disabled.svg');
 
       &:editable {
-        background-color: mix(@button-bg-color, @ui-color, @disabled-amount);
+        background-color: mix(@button-bg-color, @ui-color, @disabled-opacity);
       }
     }
 
     &:editable {
       background-color: @button-bg-color;
-      border-left: 1 solid @primary-border-color;
+      border-left: 1 solid @dark-border-color;
       border-top-right-radius: min(0, @button-border-radius - 1);
       border-bottom-right-radius: min(0, @button-border-radius - 1);
   
@@ -228,118 +228,47 @@ QGroupBox {
    Sliders
 ----------------------------------------------------------------------------- */
 
-// QSlider {
-//   background-color: transparent;
-
-//   &::add-page {
-//     // right-side of handle groove
-//   }
-
-//   &::sub-page {
-//     background-color: red;
-//     // left-side of handle groove
-//   }
-
-//   &::groove{
-//     background-color: transparent;
-//     background-image: url('@{img-url}/@{slider-groove-img}');
-//     background-position: center center;
-//     margin: 0;
-
-//     &:horizontal {
-//     background-repeat: repeat-x;
-//     height: 20;
-//     min-height: 20;
-//     }
-
-//     &:vertical {
-//       background-repeat: repeat-y;
-//       width: 20;
-//       min-width: 20;
-//     }
-
-//     &:disabled {
-//       background-image: url('@{img-url}/@{slider-groove-img-disabled}');
-//     }
-//   }
-
-//   &::handle {
-//     &:horizontal {
-//       margin: @slider-handle-margin;
-//       width: @slider-handle-width;
-//       image: url('@{img-url}/@{slider-handle-img}');
-
-//       &:hover {
-//         image: url('@{img-url}/@{slider-handle-img-hover}');
-//       }
-
-//       &:disabled {
-//         image: url('@{img-url}/@{slider-handle-img-disabled}');
-//       }
-//     }
-
-//     &:vertical {
-//       margin: @slider-v-handle-margin;
-//       height: @slider-handle-width;
-//       image: url('@{img-url}/@{slider-v-handle-img}');
-
-//       &:hover {
-//         image: url('@{img-url}/@{slider-v-handle-img-hover}');
-//       }
-
-//       &:disabled {
-//         image: url('@{img-url}/@{slider-v-handle-img-disabled}');
-//       }
-//     }
-//   }
-// }
-
 QSlider {
-  @slider-v-margin: 7;
   background-color: transparent;
 
-  // Colored line
   &::sub-page {
     background-color: @slider-groove-value-color;
-    border: 1 solid @secondary-border-color;
-    border-radius: 3;
-
+    border: 1 solid @slider-groove-border-color;
+    border-radius: @slider-groove-radius;
+    
     &:disabled {
-      background-color: desaturate(
-                          mix(
-                            @slider-groove-value-color,
-                            @ui-color,
-                            @disabled-amount
-                          ),
-                        100%);
-      border-color: mix(@secondary-border-color, @ui-color, @disabled-amount);
-    }
-
-    &:horizontal {
-      margin: @slider-v-margin 0 @slider-v-margin 0;
-    }
-  }
-  
-  // Uncolored line
-  &::add-page {
-    background-color: @ui-dark5;
-    border: 1 solid @ui-dark8;
-    border-radius: 3;
-
-    &:disabled {
-      background-color: mix(
-                          @slider-groove-empty-color,
-                          @ui-color,
-                        @disabled-amount);
-      border-color: mix(@secondary-border-color, @ui-color, @disabled-amount);
+      background-color: desaturate(mix(@slider-groove-value-color, @ui-color, @disabled-opacity), 100%);
+      border-color: mix(@slider-groove-border-color, @ui-color, @disabled-opacity);
     }
     
     &:horizontal {
       margin: @slider-v-margin 0 @slider-v-margin 0;
     }
+    &:vertical {
+      margin: 1 @slider-v-margin 1 @slider-v-margin;
+    }
+  }
+
+  &::add-page {
+    background-color: @slider-groove-color;
+    border: 1 solid @slider-groove-border-color;
+    border-radius: @slider-groove-radius;
+    
+    &:disabled {
+      background-color: mix(@slider-groove-color, @ui-color, @disabled-opacity);
+      border-color: mix(@slider-groove-border-color, @ui-color, @disabled-opacity);
+    }
+    
+    &:horizontal {
+      margin: @slider-v-margin 0 @slider-v-margin 0;
+    }
+    &:vertical {
+      margin: 0 @slider-v-margin 0 @slider-v-margin;
+    }
   }
 
   &::groove {
+    // Logical area
     background-color: transparent;
     margin: 0;
 
@@ -353,19 +282,15 @@ QSlider {
       min-width: 20;
     }
 
-    &:disabled {
-    }
+    // &:disabled {}
   }
 
   &::handle {
     &:horizontal {
-      margin: 0;
-      width: @slider-handle-width; // should be image width
+      margin-left: @slider-handle-margin;
+      margin-right: @slider-handle-margin;
+      width: @slider-handle-size; // should be image width
       image: url('@{img-url}/@{slider-handle-img}');
-
-      &:hover {
-        image: url('@{img-url}/@{slider-handle-img-hover}');
-      }
 
       &:disabled {
         image: url('@{img-url}/@{slider-handle-img-disabled}');
@@ -373,13 +298,10 @@ QSlider {
     }
 
     &:vertical {
-      margin: @slider-v-handle-margin;
-      height: @slider-handle-width;
+      margin-top: @slider-handle-margin;
+      margin-bottom: @slider-handle-margin;
+      height: @slider-handle-size;
       image: url('@{img-url}/@{slider-v-handle-img}');
-
-      &:hover {
-        image: url('@{img-url}/@{slider-v-handle-img-hover}');
-      }
 
       &:disabled {
         image: url('@{img-url}/@{slider-v-handle-img-disabled}');
@@ -402,10 +324,8 @@ QSlider {
 	qproperty-HandleLeftPixmap: url("@{img-url}/@{slider-left-handle}");
 	qproperty-HandleRightPixmap: url("@{img-url}/@{slider-right-handle}");
 
-	qproperty-HandleLeftGrayPixmap:
-    url("@{img-url}/@{slider-left-handle-disabled}");
-  qproperty-HandleRightGrayPixmap:
-    url("@{img-url}/@{slider-right-handle-disabled}");
+	qproperty-HandleLeftGrayPixmap: url("@{img-url}/@{slider-left-handle-disabled}");
+  qproperty-HandleRightGrayPixmap: url("@{img-url}/@{slider-right-handle-disabled}");
 }
 
 /* -----------------------------------------------------------------------------
@@ -468,13 +388,13 @@ QToolBar {
 
   &::separator {
     &:horizontal {
-      border-left: 1 solid @primary-border-color;
+      border-left: 1 solid @toolbar-separator-color;
       margin: 0 1;
       width: 0;
     }
 
     &:vertical {
-      border-top: 1 solid @primary-border-color;
+      border-top: 1 solid @toolbar-separator-color;
       height: 0;
       margin: 1 0;
     }
@@ -585,20 +505,20 @@ QHeaderView::section {
    Tabs
 ----------------------------------------------------------------------------- */
 
+// Round contained float style, seen in Startup window, Project settings, etc.
 QTabWidget::pane {
   background-color: transparent;
   top: -1; // move border under tabs
-  border: 1 solid @primary-border-color;
+  border: 1 solid @groupbox-border-color;
 }
 
 QTabBar {
-  // Round style, seen in Startup window, Project settings, etc.
   background-color: transparent;
 
   &::tab {
     @h-padding: 7;
     background-color: @tab-bg-color;
-    border: 1 solid @primary-border-color;
+    border: 1 solid @groupbox-border-color;
     color: @tab-text-color;
     margin-top: 4;
     margin-right: -1; // pull next tab in by 1px to overlap their borders
@@ -658,11 +578,11 @@ QTabBar {
   }
 }
 
+// Square flat style: Palette, Style Editor, Fx Editor, etc.
 #TabBarContainer {
-  // Panels: Palette, Style Editor, Fx Editor, etc.
   background-color: @tabbar-bg-color;
   qproperty-BottomAboveLineColor: @tabbar-bg-color;
-  qproperty-BottomBelowLineColor: @primary-border-color;
+  qproperty-BottomBelowLineColor: @dark-border-color;
   
   & QTabBar {
     &::tab {
@@ -670,14 +590,14 @@ QTabBar {
       @v-padding: 3;
     
       background-color: @tab-bg-color;
-      border: 1 solid @tab-border-color;
+      border: 1 solid @tab-flat-style-border-color;
       border-left-width: 0;
       border-radius: 0;
       color: @tab-text-color;
       padding: @v-padding @h-padding;
       margin: 0;
     
-      & when (@tab-border-color = @title-border-color) {
+      & when (@tab-flat-style-border-color = @title-border-color) {
         /* This will prevent top-border of the tab and the bottom-border of the
            titlebar combining which causes the style to look double thickness
            when the border colors of both elements are the same. */
@@ -692,40 +612,16 @@ QTabBar {
       &:selected {
         background-color: @tab-bg-color-selected;
         color: @tab-text-color-selected;
-        border-color: @tab-border-color;
+        border-color: @tab-flat-style-border-color;
         border-bottom-color: @tab-bg-color-selected;
     
-        & when (@tab-border-color = @title-border-color) {
+        & when (@tab-flat-style-border-color = @title-border-color) {
           /* This will prevent top-border of the tab and the bottom-border of
              the titlebar combining which causes the style to look double
              thickness when the border colors of both elements are the same. */
           border-top-color: transparent;
         }
       }
-    }
-  }
-}
-
-/* -----------------------------------------------------------------------------
-   Misc
------------------------------------------------------------------------------ */
-
-QListWidget {
-  background-color: @menu-bg-color;
-  border: 1 solid @menu-border-color;
-  
-  &::item {
-    color: @menu-text-color;
-    padding: 3 0 3 0;
-    
-    &:hover {
-      background-color: @secondary-hl-color;
-      color: @secondary-hl-text-color;
-    }
-    
-    &:selected {
-      background-color: @menu-item-bg-color-selected;
-      color: @menu-item-text-color-selected;
     }
   }
 }

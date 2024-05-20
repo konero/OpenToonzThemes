@@ -33,8 +33,7 @@
 #XsheetCellArea {
   // This is for the textfield when inputting drawing names into cells
   & QLineEdit {
-    // Style the cell input fields specially, this mixin forces a style of very
-    // high contrast on all themes!
+    // This mixin is maximum contrast
     .spreadsheet-textfield-style();
   }
 }
@@ -47,7 +46,7 @@
   background-color: @ui-dark2;
   padding: 0 5 0 5;
   margin: 0;
-  border-bottom: 1 solid @secondary-border-color;
+  border-bottom: 1 solid @dark-border-color;
 
   & QWidget {
     background-color: @ui-dark2;
@@ -77,10 +76,7 @@
 }
 
 #xsheetColumnAreaMenu_Camstand {
-  @xsh-menu-camstand-color: hsl(
-                              hue(@xsh-camstand-button-bg-on-color),
-                              40%,
-                              80%);
+  @xsh-menu-camstand-color: hsl(hue(@xsh-camstand-button-bg-on-color), 40%, 80%);
   background-color: @xsh-menu-camstand-color;	
   color: #000;
   
@@ -104,11 +100,11 @@
 /* -------------------------------------------------------------------------- */
 
 #noteTextEdit {
-  color: #000; // redundant?
+  color: #000; // #todo: redundant?
 }
 
 #DvMiniToolBar {
-  border: 1 solid @primary-border-color;
+  border: 1 solid @dark-border-color;
 }
 
 /* XSheet Spreadsheet
@@ -116,31 +112,35 @@
 
 XsheetViewer {
   qproperty-TextColor: @xsh-cell-text-color;
-  qproperty-ErrorTextColor: rgb(255, 123, 123); // #todo
+  qproperty-ErrorTextColor: rgb(255, 123, 123);
   qproperty-SelectedTextColor: @xsh-selected-cell-text-color;
   qproperty-FrameTextColor: @xsh-frame-row-text-color;
   qproperty-CurrentFrameTextColor: @xsh-current-frame-text-color;
   qproperty-PreviewFrameTextColor: @xsh-preview-frame-text-color;
   qproperty-ColumnTextColor:@dull-text-color;
   qproperty-HighlightColumnTextColor: @xsh-cell-text-color;
+  qproperty-KeyframeLineColor: @xsh-keyframe-line-color;
+  qproperty-LevelEndColor: @xsh-level-end-color;
 
   qproperty-BGColor: @xsh-frame-row-bg-color;
-  qproperty-LightBGColor: @xsh-LightBG-color;
-  qproperty-DarkBGColor: @xsh-DarkBG-color;
-  qproperty-LightLightBGColor: @xsh-empty-area-color; // #todo: redundant?
+  qproperty-LightBGColor: @xsh-LightBG-color; // #todo: redundant?
+  qproperty-DarkBGColor: @xsh-DarkBG-color; // #todo: redundant?
+  qproperty-LightLightBGColor: @xsh-column-color; // #todo: redundant?
   qproperty-LightLineColor: @xsh-horizontal-cell-line-color;
   qproperty-DarkLineColor: @xsh-DarkLine-color;
   qproperty-VerticalLineColor: @xsh-vertical-column-line-color;
-  qproperty-VerticalLineHeadColor: @secondary-border-color;
-  qproperty-ColumnIconLineColor: @secondary-border-color;
+  qproperty-VerticalLineHeadColor: @dark-border-color;
+  qproperty-ColumnIconLineColor: @dark-border-color;
   qproperty-CycleColor: @xsh-cell-text-color;
   qproperty-CurrentRowBgColor: @xsh-current-frame-row-bg-color;
   qproperty-OnionSkinAreaBgColor: @xsh-onionskin-column-bg-color;
   qproperty-PlayRangeColor: @xsh-play-range-row-bg-color;
-  qproperty-EmptyColumnHeadColor: @ui-color;
+  qproperty-CurrentTimeIndicatorColor: @xsh-current-time-indicator-color;
+  qproperty-EmptyColumnHeadColor: @xsh-empty-column-head-color;
   qproperty-CellFocusColor: @xsh-current-cell-border-color;
   qproperty-ColumnHeadPastelizer: @xsh-column-header-pastelizer-color;
-  qproperty-SelectedColumnHead: rgba(#fff, 0.3); // #todo
+  qproperty-SelectedColumnHead: @xsh-selected-column-border-color;
+
   qproperty-FoldedColumnBGColor: @xsh-folded-column-bg-color;
   qproperty-FoldedColumnLineColor: @xsh-folded-column-line-color;
 
@@ -148,191 +148,85 @@ XsheetViewer {
   qproperty-SecMarkerLineColor: @xsh-sec-marker-line-color;
   qproperty-SelectedMarkerLineColor: @xsh-selected-marker-line-color;
   
-  qproperty-EmptyCellColor: @xsh-empty-area-color;
-  qproperty-NotEmptyColumnColor: @ui-color;
+  qproperty-EmptyCellColor: @xsh-empty-column-color;
+  qproperty-NotEmptyColumnColor: @xsh-column-color;
   qproperty-SelectedEmptyCellColor: @xsh-selected-empty-area-color;
 
-  qproperty-CurrentTimeIndicatorColor: @xsh-current-time-indicator-color;
 
   // Level Type Colors
   // ---------------------------------------------------------------------------
+  qproperty-LevelColumnColor: lighten(saturate(@xsh-toonzraster-color, @xsh-cell-saturation), @xsh-cell-lightness);
+  qproperty-LevelColumnBorderColor: lighten(saturate(@xsh-toonzraster-color, @xsh-handle-saturation), @xsh-handle-lightness);
+  qproperty-SelectedLevelColumnColor: lighten(saturate(@xsh-toonzraster-color, @xsh-hl-saturation), @xsh-hl-lightness);
+  
+  qproperty-VectorColumnColor: lighten(saturate(@xsh-vector-color, @xsh-cell-saturation), @xsh-cell-lightness);
+  qproperty-VectorColumnBorderColor: lighten(saturate(@xsh-vector-color, @xsh-handle-saturation), @xsh-handle-lightness);
+  qproperty-SelectedVectorColumnColor: lighten(saturate(@xsh-vector-color, @xsh-hl-saturation), @xsh-hl-lightness);  
 
-  // Toonz Raster
-  // ---------------------------------------------------------------------------
-  qproperty-LevelColumnColor: @xsh-toonzraster-color;
-  qproperty-LevelColumnBorderColor:
-    hsl(hue(@xsh-toonzraster-color),
-    @xsh-handle-saturation,
-    @xsh-handle-lightness);
-  qproperty-SelectedLevelColumnColor:
-    hsl(hue(@xsh-toonzraster-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
-  
-  // Vector
-  // ---------------------------------------------------------------------------
-  qproperty-VectorColumnColor: @xsh-vector-color;
-  qproperty-VectorColumnBorderColor:
-    hsl(hue(@xsh-vector-color),
-    @xsh-handle-saturation,
-    @xsh-handle-lightness);
-  qproperty-SelectedVectorColumnColor:
-    hsl(hue(@xsh-vector-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
-  
-  // Sub Xsheet
-  // ---------------------------------------------------------------------------
-  qproperty-ChildColumnColor: @xsh-sub-color;
-  qproperty-ChildColumnBorderColor:
-    hsl(hue(@xsh-sub-color),
-    @xsh-handle-saturation,
-    @xsh-handle-lightness);
-  qproperty-SelectedChildColumnColor:
-    hsl(hue(@xsh-sub-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
-  
-  // Raster
-  // ---------------------------------------------------------------------------
-  qproperty-FullcolorColumnColor: @xsh-raster-color;
-  qproperty-FullcolorColumnBorderColor:
-    hsl(hue(@xsh-raster-color),
-    @xsh-handle-saturation,
-    @xsh-handle-lightness);
-  qproperty-SelectedFullcolorColumnColor:
-    hsl(hue(@xsh-raster-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
-  
-  // FX
-  // ---------------------------------------------------------------------------
-  qproperty-FxColumnColor: @xsh-fx-color;
-  qproperty-FxColumnBorderColor:
-    hsl(hue(@xsh-fx-color),
-    @xsh-handle-saturation,
-    @xsh-handle-lightness);
-  qproperty-SelectedFxColumnColor:
-    hsl(hue(@xsh-fx-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
-  
-  // Reference / Off
-  // ---------------------------------------------------------------------------
+  qproperty-ChildColumnColor: lighten(saturate(@xsh-sub-color, @xsh-cell-saturation), @xsh-cell-lightness);
+  qproperty-ChildColumnBorderColor: lighten(saturate(@xsh-sub-color, @xsh-handle-saturation), @xsh-handle-lightness);
+  qproperty-SelectedChildColumnColor: lighten(saturate(@xsh-sub-color, @xsh-hl-saturation), @xsh-hl-lightness);
+
+  qproperty-FullcolorColumnColor: lighten(saturate(@xsh-raster-color, @xsh-cell-saturation), @xsh-cell-lightness);
+  qproperty-FullcolorColumnBorderColor: lighten(saturate(@xsh-raster-color, @xsh-handle-saturation), @xsh-handle-lightness);
+  qproperty-SelectedFullcolorColumnColor: lighten(saturate(@xsh-raster-color, @xsh-hl-saturation), @xsh-hl-lightness);
+
+  qproperty-FxColumnColor: lighten(saturate(@xsh-fx-color, @xsh-cell-saturation), @xsh-cell-lightness);
+  qproperty-FxColumnBorderColor: lighten(saturate(@xsh-fx-color, @xsh-handle-saturation), @xsh-handle-lightness);
+  qproperty-SelectedFxColumnColor: lighten(saturate(@xsh-fx-color, @xsh-hl-saturation), @xsh-hl-lightness);
+
   qproperty-ReferenceColumnColor: @xsh-reference-color;
-  qproperty-ReferenceColumnBorderColor:
-    hsl(hue(@xsh-reference-color),
-    0%,
-    @xsh-handle-lightness);
-  qproperty-SelectedReferenceColumnColor:
-    hsl(hue(@xsh-reference-color),
-    0%,
-    @xsh-cell-selected-lightness);
+  qproperty-ReferenceColumnBorderColor: @xsh-reference-handle-color;
+  qproperty-SelectedReferenceColumnColor: @xsh-reference-selected-color;
+
+  qproperty-PaletteColumnColor: lighten(saturate(@xsh-palette-color, @xsh-cell-saturation), @xsh-cell-lightness);
+  qproperty-PaletteColumnBorderColor: lighten(saturate(@xsh-palette-color, @xsh-handle-saturation), @xsh-handle-lightness);
+  qproperty-SelectedPaletteColumnColor: lighten(saturate(@xsh-palette-color, @xsh-hl-saturation), @xsh-hl-lightness);
+
+  qproperty-MeshColumnColor: lighten(saturate(@xsh-mesh-color, @xsh-cell-saturation), @xsh-cell-lightness);
+  qproperty-MeshColumnBorderColor: lighten(saturate(@xsh-mesh-color, @xsh-handle-saturation), @xsh-handle-lightness);
+  qproperty-SelectedMeshColumnColor: lighten(saturate(@xsh-mesh-color, @xsh-hl-saturation), @xsh-hl-lightness);
+
+  qproperty-MetaColumnColor: lighten(saturate(@xsh-assistants-color, @xsh-cell-saturation), @xsh-cell-lightness);
+  qproperty-MetaColumnBorderColor: lighten(saturate(@xsh-assistants-color, @xsh-handle-saturation), @xsh-handle-lightness);
+  qproperty-SelectedMetaColumnColor: lighten(saturate(@xsh-assistants-color, @xsh-hl-saturation), @xsh-hl-lightness);
   
-  // Palette
-  // ---------------------------------------------------------------------------
-  qproperty-PaletteColumnColor: @xsh-palette-color;
-  qproperty-PaletteColumnBorderColor:
-    hsl(hue(@xsh-palette-color),
-    @xsh-handle-saturation,
-    @xsh-handle-lightness);
-  qproperty-SelectedPaletteColumnColor:
-    hsl(hue(@xsh-palette-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
-  
-  // Mesh
-  // ---------------------------------------------------------------------------
-  qproperty-MeshColumnColor: @xsh-mesh-color;
-  qproperty-MeshColumnBorderColor:
-    hsl(hue(@xsh-mesh-color),
-    @xsh-handle-saturation,
-    @xsh-handle-lightness);
-  qproperty-SelectedMeshColumnColor:
-    hsl(hue(@xsh-mesh-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
-  
-  // Assistants
-  // ---------------------------------------------------------------------------
-  qproperty-MetaColumnColor: @xsh-assistants-color;
-  qproperty-MetaColumnBorderColor:
-    hsl(hue(@xsh-assistants-color),
-    @xsh-handle-saturation,
-    @xsh-handle-lightness);
-  qproperty-SelectedMetaColumnColor:
-    hsl(hue(@xsh-assistants-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
-  
-  // Sound Text / Notes
-  // ---------------------------------------------------------------------------
   qproperty-SoundTextColumnColor: @xsh-notes-color;
   qproperty-SoundTextColumnBorderColor: @xsh-notes-border-color;
   qproperty-SelectedSoundTextColumnColor: @xsh-notes-selected-cell-color;
   
-  // Sound File
-  // ---------------------------------------------------------------------------
-  qproperty-SoundColumnColor: @xsh-sound-color;
-  qproperty-SoundColumnBorderColor:
-    hsl(hue(@xsh-sound-color),
-    @xsh-handle-saturation,
-    @xsh-handle-lightness);
-  qproperty-SelectedSoundColumnColor:
-    hsl(hue(@xsh-sound-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
+  qproperty-SoundColumnColor: lighten(saturate(@xsh-sound-color, @xsh-cell-saturation), @xsh-cell-lightness);
+  qproperty-SoundColumnBorderColor: lighten(saturate(@xsh-sound-color, @xsh-handle-saturation), @xsh-handle-lightness);
+  qproperty-SelectedSoundColumnColor: lighten(saturate(@xsh-sound-color, @xsh-hl-saturation), @xsh-hl-lightness);
   qproperty-SoundColumnHlColor: @xsh-sound-hl-color;
   qproperty-SoundColumnTrackColor: @xsh-sound-track-color;
   
-  // Camera
-  // ---------------------------------------------------------------------------
   qproperty-ActiveCameraColor: @xsh-camera-active-color;
-  qproperty-SelectedActiveCameraColor:
-    hsl(hue(@xsh-camera-active-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
+  qproperty-SelectedActiveCameraColor: lighten(saturate(@xsh-camera-active-color, @xsh-hl-saturation), @xsh-hl-lightness);
   qproperty-OtherCameraColor: @xsh-camera-other-color;
-  qproperty-SelectedOtherCameraColor:
-    hsl(hue(@xsh-camera-other-color),
-    @xsh-cell-selected-saturation,
-    @xsh-cell-selected-lightness);
+  qproperty-SelectedOtherCameraColor: lighten(saturate(@xsh-camera-other-color, @xsh-hl-saturation), @xsh-hl-lightness);
   
   qproperty-TableColor: @xsh-table-color;
   qproperty-PegColor: @xsh-peg-color;
   
   // Column Header: Vertical (XSheet)
   // ---------------------------------------------------------------------------
-  
   qproperty-XsheetColumnNameBgColor: @xsh-column-name-bg-color;
   qproperty-XsheetDragBarHighlightColor: rgba(255, 255, 255, 0.25);
   
-  // Preview
-  qproperty-XsheetPreviewButtonBgOnColor:
-    @xsh-preview-button-bg-on-color;
-  qproperty-XsheetPreviewButtonOnImage:
-    url('@{img-url}/x_prev_eye_on.svg');
-  qproperty-XsheetPreviewButtonBgOffColor:
-    transparent;
-  qproperty-XsheetPreviewButtonOffImage:
-    url('@{img-url}/x_prev_eye_off.svg');
+  qproperty-XsheetPreviewButtonBgOnColor: @xsh-preview-button-bg-on-color;
+  qproperty-XsheetPreviewButtonOnImage: url('@{img-url}/x_prev_eye_on.svg');
+  qproperty-XsheetPreviewButtonBgOffColor: transparent;
+  qproperty-XsheetPreviewButtonOffImage: url('@{img-url}/x_prev_eye_off.svg');
 
-  // Other
-  qproperty-XsheetUnifiedButtonTranspImage:
-    url('@{img-url}/x_prev_eye_transp.svg');
+  qproperty-XsheetUnifiedButtonTranspImage: url('@{img-url}/x_prev_eye_transp.svg');
 
-  // Table
-  qproperty-XsheetCamstandButtonBgOnColor:
-    @xsh-camstand-button-bg-on-color;
-  qproperty-XsheetCamstandButtonOnImage:
-    url('@{img-url}/x_table_view_on.svg');
-  qproperty-XsheetCamstandButtonTranspImage:
-    url('@{img-url}/x_table_view_transp.svg');
+  qproperty-XsheetCamstandButtonBgOnColor: @xsh-camstand-button-bg-on-color;
+  qproperty-XsheetCamstandButtonOnImage: url('@{img-url}/x_table_view_on.svg');
+  qproperty-XsheetCamstandButtonTranspImage: url('@{img-url}/x_table_view_transp.svg');
   qproperty-XsheetCamstandButtonBgOffColor: transparent;
-  qproperty-XsheetCamstandButtonOffImage:
-    url('@{img-url}/x_table_view_off.svg');
+  qproperty-XsheetCamstandButtonOffImage: url('@{img-url}/x_table_view_off.svg');
 
-  // Lock
   qproperty-XsheetLockButtonBgOnColor: @xsh-lock-button-bg-on-color;
   qproperty-XsheetLockButtonOnImage: url('@{img-url}/x_lock_on.svg');
   qproperty-XsheetLockButtonBgOffColor: transparent;
@@ -343,31 +237,21 @@ XsheetViewer {
   
   // Column Header: Horizontal (Timeline)
   // ---------------------------------------------------------------------------
-  
-  qproperty-TimelineIconLineColor: @secondary-border-color;
-  qproperty-FrameRangeMarkerLineColor:
-    if(lightness(@xsh-frame-row-bg-color) > 35%, 
-    rgba(0, 0, 0, 0.5), 
-    rgba(255, 255, 255, 0.5));
+  qproperty-TimelineIconLineColor: @dark-border-color;
+  qproperty-FrameRangeMarkerLineColor: if(lightness(@xsh-frame-row-bg-color) > 35%, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
 
   qproperty-TimelinePreviewButtonBgOnColor: @ui-color;
   qproperty-TimelinePreviewButtonOnImage: url('@{img-url}/preview_small.svg');
   qproperty-TimelinePreviewButtonBgOffColor: @ui-color;
   qproperty-TimelinePreviewButtonOffImage: url('@{img-url}/transparent.svg');
   
-  qproperty-TimelineUnifiedButtonTranspImage:
-    url('@{img-url}/preview_trans_small.svg');
+  qproperty-TimelineUnifiedButtonTranspImage: url('@{img-url}/preview_trans_small.svg');
 
-  qproperty-TimelineCamstandButtonBgOnColor:
-    @ui-color;
-  qproperty-TimelineCamstandButtonOnImage:
-    url('@{img-url}/table_small.svg');
-  qproperty-TimelineCamstandButtonTranspImage:
-    url('@{img-url}/trans_small.svg');
-  qproperty-TimelineCamstandButtonBgOffColor:
-    @ui-color;
-  qproperty-TimelineCamstandButtonOffImage:
-    url('@{img-url}/transparent.svg');
+  qproperty-TimelineCamstandButtonBgOnColor: @ui-color;
+  qproperty-TimelineCamstandButtonOnImage: url('@{img-url}/table_small.svg');
+  qproperty-TimelineCamstandButtonTranspImage: url('@{img-url}/trans_small.svg');
+  qproperty-TimelineCamstandButtonBgOffColor: @ui-color;
+  qproperty-TimelineCamstandButtonOffImage: url('@{img-url}/transparent.svg');
 
   qproperty-TimelineLockButtonBgOnColor: @ui-color;
   qproperty-TimelineLockButtonOnImage: url('@{img-url}/lock_on_small.svg');
@@ -376,6 +260,28 @@ XsheetViewer {
 
   qproperty-TimelineConfigButtonBgColor: @ui-color;
   qproperty-TimelineConfigButtonImage: url('@{img-url}/timeline_config.svg');
+
+  // Parent Drop-Down Menu
+  // ---------------------------------------------------------------------------
+  & QListWidget {
+    background-color: @menu-bg-color;
+    border: 1 solid @menu-border-color;
+    
+    &::item {
+      color: @menu-text-color;
+      padding: 3 0 3 0;
+      
+      &:hover {
+        background-color: @secondary-hl-color;
+        color: @secondary-hl-text-color;
+      }
+      
+      &:selected {
+        background-color: @menu-item-bg-color-selected;
+        color: @menu-item-text-color-selected;
+      }
+    }
+  }
 }
 
 /* -----------------------------------------------------------------------------
@@ -388,7 +294,7 @@ XsheetViewer {
     // X-sheet when docked side-by-side (higher value pushes editor down)
     @scroll-sync-height: 26;
 
-    border: 0; // no border for now, it causes issues with Xsh/FE sync
+    border: 0; // no border for now, it causes issues with sync
     height: @scroll-sync-height;
     min-height: @scroll-sync-height;
     max-height: @scroll-sync-height;
@@ -410,7 +316,7 @@ XsheetViewer {
 
 #FunctionEditorTree {
   .treeview-item-style();
-  border-top: 1 solid @primary-border-color;
+  border-top: 1 solid @dark-border-color;
 
   &::branch {
     .treeview-branch-style();
@@ -423,8 +329,8 @@ FunctionTreeView {
 
 /* Function Editor Spreadsheet
 ----------------------------------------------------------------------------- */
-// If a qproperty shares the same likeness with X-sheet then use the ones for
-// the X-sheet for consistency.
+// If a qproperty shares the same likeness with X-Sheet then use the ones for
+// the X-Sheet for consistency.
 
 #ScrollRowArea,
 #ScrollCellArea {
@@ -456,25 +362,21 @@ SpreadsheetViewer {
     .spreadsheet-textfield-style();
   }
 
-  qproperty-LightLightBGColor: @xsh-empty-area-color;
+  qproperty-LightLightBGColor: @xsh-empty-column-color;
   qproperty-CurrentRowBgColor: @xsh-current-frame-row-bg-color;
   qproperty-LightLineColor: @xsh-horizontal-cell-line-color;
   qproperty-MarkerLineColor: @xsh-marker-line-color;
   qproperty-SecMarkerLineColor: @xsh-sec-marker-line-color;
-  qproperty-BGColor: @ui-color;
+  qproperty-BGColor: @xsh-column-color;
   qproperty-VerticalLineColor: @xsh-vertical-column-line-color;
   qproperty-KeyFrameColor: @fe-keyframe-color;
-  qproperty-KeyFrameBorderColor: saturate(
-                                   darken(@fe-keyframe-color, 15%), 15%);
-  qproperty-SelectedKeyFrameColor: saturate(
-                                     lighten(@fe-keyframe-color, 15%), 15%);
+  qproperty-KeyFrameBorderColor: saturate(darken(@fe-keyframe-color, 15%), 15%);
+  qproperty-SelectedKeyFrameColor: saturate(lighten(@fe-keyframe-color, 15%), 15%);
   qproperty-IgnoredKeyFrameColor: @fe-ignored-keyframe-color;
   qproperty-SelectedIgnoredKeyFrameColor: @fe-selected-ignored-keyframe-color;
   qproperty-InBetweenColor: @fe-inbetween-color;
-  qproperty-InBetweenBorderColor: saturate(
-                                    darken(@fe-inbetween-color, 10%), 0%);
-  qproperty-SelectedInBetweenColor: saturate(
-                                      lighten(@fe-inbetween-color, 15%), 0%);
+  qproperty-InBetweenBorderColor: saturate(darken(@fe-inbetween-color, 10%), 0%);
+  qproperty-SelectedInBetweenColor: saturate(lighten(@fe-inbetween-color, 15%), 0%);
   qproperty-IgnoredInBetweenColor: @fe-ignored-inbetween-color;
   qproperty-SelectedIgnoredInBetweenColor: @fe-selected-ignored-inbetween-color;
   qproperty-SelectedEmptyColor: @xsh-selected-empty-area-color;
@@ -484,8 +386,8 @@ SpreadsheetViewer {
   qproperty-FrameTextColor: @xsh-frame-row-text-color;
   qproperty-GroupNameTextColor: @normal-label-color;
   qproperty-ChannelNameTextColor: @text-color;
-  qproperty-ColumnHeaderBorderColor: @primary-border-color; // group border
-  qproperty-CycleColor: @fe-cycle-color; // zigzag line
+  qproperty-ColumnHeaderBorderColor: @dark-border-color; // group border
+  qproperty-KeyframeLineColor: @fe-cycle-color; // zigzag line
 }
 
 #FunctionSegmentViewer {
@@ -496,8 +398,8 @@ SpreadsheetViewer {
 
 #ExpressionField {
   background-color: #e7e7e7;
-	border: 1 solid @secondary-border-color;
+	border: 1 solid @dark-border-color;
   margin: 0;
 }
 
-// #FunctionSegmentViewerLinkButton {}
+// #FunctionSegmentViewerLinkButton {} // #todo: redundant?

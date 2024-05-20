@@ -40,8 +40,8 @@
   }
 
   &:disabled {
-    background-color: mix(@button-bg-color, @ui-color, @disabled-amount);
-    border-color: mix(@ui-color, @button-border-color, @disabled-amount);
+    background-color: mix(@button-bg-color, @ui-color, @disabled-opacity);
+    border-color: mix(@button-border-color, @ui-color, @disabled-opacity);
     color: @text-color-disabled;
   }
 }
@@ -98,8 +98,8 @@
     color: @text-color-disabled;
     
     &:checked {
-      background-color: mix(@ui-color, @button-bg-color, @disabled-amount);
-      border-color: mix(@ui-color, @button-border-color, @disabled-amount);
+      background-color: mix(@ui-color, @button-bg-color, @disabled-opacity);
+      border-color: mix(@ui-color, @button-border-color, @disabled-opacity);
     }
   }
 }
@@ -152,7 +152,7 @@
   }
 
   &:disabled {
-    background-color: mix(@scroll-button-bg-color, @ui-color, @disabled-amount);
+    background-color: mix(@scroll-button-bg-color, @ui-color, @disabled-opacity);
     border-color: @scroll-button-border-color;
     color: @text-color-disabled;
   }
@@ -222,8 +222,8 @@
   }
 
   &:disabled {
-    background-color:mix(@input-bg-color, @ui-color, @disabled-amount);
-    border-color: mix(@input-border-color, @ui-color, @disabled-amount);
+    background-color:mix(@input-bg-color, @ui-color, @disabled-opacity);
+    border-color: mix(@input-border-color, @ui-color, @disabled-opacity);
     color: @text-color-disabled;
   }
 }
@@ -246,7 +246,7 @@
   }
 
 // -----------------------------------------------------------------------------
-// Check Boxes
+// Checkboxes
 // -----------------------------------------------------------------------------
 
 .checkbox-indicator-style() {
@@ -266,7 +266,7 @@
   &:checked {
     background-color: @checkbox-bg-color-checked;
     border-color: @checkbox-border-color-checked;
-    image: url('@{img-url}/checkmark.svg');
+    image: url('@{img-url}/@{checkbox-img-checked}');
 
     &:hover {
       background-color: @checkbox-bg-color-checked-hover;
@@ -276,20 +276,20 @@
     &:disabled {
       background-color:
         desaturate(
-          mix(@checkbox-bg-color-checked, @ui-color, @disabled-amount),
+          mix(@checkbox-bg-color-checked, @ui-color, @disabled-opacity),
           100%);
       border-color:
         desaturate(
-          mix(@checkbox-border-color-checked, @ui-color, @disabled-amount),
+          mix(@checkbox-border-color-checked, @ui-color, @disabled-opacity),
           100%);
-      image: url('@{img-url}/checkmark_disabled.svg');
+      image: url('@{img-url}/@{checkbox-img-disabled}');
     }
   }
 
   &:indeterminate {
     background-color: @checkbox-bg-color-checked;
     border-color: @checkbox-border-color-checked;
-    image: url('@{img-url}/checkpartially.svg');
+    image: url('@{img-url}/@{checkbox-img-partially}');
 
     &:hover {
       background-color: @checkbox-bg-color-hover;
@@ -298,16 +298,16 @@
 
     &:disabled {
       background-color:
-        mix(@checkbox-bg-color-checked, @ui-color, @disabled-amount);
+        mix(@checkbox-bg-color-checked, @ui-color, @disabled-opacity);
       border-color:
-        mix(@checkbox-border-color-checked, @ui-color, @disabled-amount);
-      image: url('@{img-url}/checkpartially_disabled.svg');
+        mix(@checkbox-border-color-checked, @ui-color, @disabled-opacity);
+      image: url('@{img-url}/@{checkbox-img-partially-disabled}');
     }
   }
 
   &:disabled {
-    background-color: mix(@checkbox-bg-color, @ui-color, @disabled-amount);
-    border-color: mix(@checkbox-border-color, @ui-color, @disabled-amount);
+    background-color: mix(@checkbox-bg-color, @ui-color, @disabled-opacity);
+    border-color: mix(@checkbox-border-color, @ui-color, @disabled-opacity);
   }
 }
 
@@ -449,7 +449,7 @@
 // -----------------------------------------------------------------------------
 
 .lock-icon-style() {
-  .main-button-style();
+  .tool-button-style();
   height: 18;
   width: 19;
   padding: 0 -1 0 1;
@@ -460,6 +460,11 @@
 
     &:hover {
       image: url('@{img-url}/lock_over.svg');
+    }
+
+    &:pressed {
+      background-color: @toolbutton-bg-color-pressed;
+      border-color: @toolbutton-border-color-pressed;
     }
   }
 

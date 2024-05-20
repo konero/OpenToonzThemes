@@ -5,15 +5,125 @@
 // -----------------------------------------------------------------------------
 
 // Imports
-@import 'default-theme.less';
+@import '../default/default-theme.less';
 
 // -----------------------------------------------------------------------------
-
-@img-url: '../Default/imgs/white';
-
+// Config
 // -----------------------------------------------------------------------------
+
+// Is Dark Theme?
+@dark-theme: false;
+
+// Image Path (relative to where the Default.qss file output is)
+@img-url: '../Default/imgs/black';
+
+// Adjust Shading
+@bg-contrast-dark: 1.2;
+@bg-contrast-light: 1.1;
+@border-contrast: 1.0;
 
 // Interface Colors
 @ui-color: #808080;
-
 @text-color: #000;
+@dull-text-color: rgba(0, 0, 0, 0.8);
+@hl-color: #739D8E;
+@hl-text-color: #000;
+@secondary-hl-color: rgba(255, 255, 255, 0.25);
+@secondary-hl-text-color: black;
+
+@lock-color: hsl(0, 73%, 70%);
+@preview-color: hsl(57, 64%, 65%);
+
+@normal-label-color: #001dad;
+@error-label-color: red;
+
+@lock-color: #f17e85;
+@preview-color: hsl(50, 53%, 58%);
+@panel-separator-color: @ui-dark8;
+
+// -----------------------------------------------------------------------------
+// Overrides
+// -----------------------------------------------------------------------------
+
+// ----- Checkbox //#todo
+@checkbox-bg-color-checked: black;
+@checkbox-border-color-hover: white;
+@checkbox-border-color-checked: @checkbox-bg-color-checked;
+@checkbox-img-checked: 'checkmark.svg';
+@checkbox-img-disabled: 'checkmark_disabled.svg';
+@checkbox-img-partially: 'checkpartially.svg';
+@checkbox-img-partially-disabled: 'checkpartially_disabled.svg';
+
+// ----- Tabs
+@tab-text-color-hover: #000;
+
+// ----- Menu
+@menu-bg-color: @ui-light6;
+@menu-separator-color: @dark-border-color;
+
+// ----- Button
+@button-border-color: darken(@ui-dark5, @border-contrast);
+@button-border-color-hover: @button-border-color;
+@button-border-color-focus: @button-border-color;
+@button-border-color-focus-hover: @button-border-color-focus;
+
+// ----- ToolButton
+@toolbutton-border-color-checked: @ui-dark5;
+@toolbutton-border-color-hover: @toolbutton-border-color-checked;
+@toolbutton-border-color-checked-hover: @toolbutton-border-color-checked;
+@lockbutton-border-color-checked: @toolbutton-border-color-checked;
+@lockbutton-border-color-checked-hover: @toolbutton-border-color-checked;
+@lockbutton-border-color-checked-pressed: @toolbutton-border-color-checked;
+
+// ----- Input
+@input-bg-color: @ui-light10;
+@input-border-color: @dark-border-color;
+@input-border-color-focus: @input-border-color;
+@input-text-color: rgb(0, 0, 0);
+@input-text-color-focus: @input-text-color;
+
+// ----- TopBar
+@rooms-tab-bg-color: @title-bg-color;
+
+// ----- XSheet
+@xsh-cell-text-color: rgba(black, 0.8);
+@xsh-cell-lightness: 14%;
+@xsh-cell-saturation: -14%;
+@xsh-play-range-row-bg-color: @ui-light2;
+
+@xsh-hl-lightness: 25%;
+@xsh-hl-saturation: -10%;
+// @xsh-bg-contrast-light: -2%;
+@xsh-lines-contrast: 0.7;
+
+@xsh-handle-lightness: -4%;
+@xsh-handle-saturation: @xsh-cell-saturation;
+
+// ----- Item Tree
+@tree-bg-color: @ui-color;
+@tree-bg-color-alt-row: rgba(255, 255, 255, 0.06);
+
+// ----- Slider
+@slider-handle-margin: 0;
+@slider-handle-img: 'slider-handle-rectangle-outline.svg';
+@slider-handle-img-disabled: 'slider-handle-rectangle-outline_disabled.svg';
+@slider-v-handle-img: 'slider-handle-v-rectangle-outline.svg';
+@slider-v-handle-img-disabled: 'slider-handle-v-rectangle-outline_disabled.svg';
+
+// // ----- Schematic
+// @node-text-color: rgba(0, 0, 0, 0.9);
+
+// // Level Node Colors (raster, etc.)
+// @node-lightness:  52%;
+// @node-saturation: 28%;
+
+// // Stage Node Colors (peg, macro, etc.)
+// @stage-node-lightness:  58%;
+// @stage-node-saturation: 22%; // 0-100%
+
+// // Output Node Colors (camera)
+// @output-node-lightness:  58%;
+// @output-node-saturation: 22%;
+
+// // FX Settings Label Color
+// @node-label-text-color: @normal-label-color;

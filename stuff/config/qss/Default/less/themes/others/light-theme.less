@@ -5,15 +5,55 @@
 // -----------------------------------------------------------------------------
 
 // Imports
-@import 'default-theme.less';
+@import '../default/default-theme.less';
 
 // -----------------------------------------------------------------------------
 
-@img-url: '../Default/imgs/white';
+@img-url: '../Default/imgs/black';
 
 // -----------------------------------------------------------------------------
 
 // Interface Colors
-@ui-color: #e8e8e8;
+// @ui-color: #474549;
+// @text-color: #c5c2c6;
+// @hl-color: rgb(75, 160, 132);
+// @hl-text-color: rgb(255, 255, 255);
 
-@text-color: #000;
+//mist
+// @bg-contrast-dark: 1.2;
+
+// @ui-color: rgb(123, 132, 128);
+// @text-color: #000000;
+// @hl-color: rgb(180, 186, 187);
+// @hl-text-color: rgb(0, 0, 0);
+
+// @input-bg-color: @ui-dark10;
+// @input-text-color: rgb(188, 190, 196);
+
+@bg-contrast-dark: 1.7;
+@bg-contrast-light: 0.0;
+@hover-strength: -10%; // invert hover
+
+@ui-color: rgb(232, 232, 232);
+@text-color: #000000;
+@hl-color: rgb(255, 192, 160);
+@hl-text-color: rgb(0, 0, 0);
+
+@input-bg-color: white;
+@input-text-color: black;
+@input-border-color: @ui-dark4;
+
+@button-bg-color: @ui-dark2;
+@button-border-color: @ui-dark4;
+
+@panel-separator-color: @ui-dark10;
+
+// -----------------------------------------------------------------------------
+// X-Sheet Overrides
+// -----------------------------------------------------------------------------
+
+@xsh-cell-lightness: 75%;
+@xsh-cell-saturation: 32%;
+// @xsh-bg-contrast-dark: -5%; // %
+// @xsh-bg-contrast-light: 4%; // %
+// @xsh-lines-contrast: 1.8;

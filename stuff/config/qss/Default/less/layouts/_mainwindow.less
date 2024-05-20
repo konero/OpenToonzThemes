@@ -66,7 +66,7 @@ TPanel {
   border: 0; // reset
   /* Accent border against docked panels, requires margin-bottom in
      #TopBarTabContainer to be seen! */
-  border-bottom: @topbar-dock-spacer-size solid @secondary-border-color;
+  border-bottom: @topbar-dock-spacer-size solid @dark-border-color;
   margin: 0;
 
   & #EditToolLockButton {
@@ -103,7 +103,7 @@ QMenuBar {
   &::item {
     background-color: @topbar-bg-color;
     border-left: 1 solid @topbar-bg-color; // helps to align item with QMenu
-    padding: 4 5;
+    padding: 3 5;
 
     &:selected {
       background-color: @secondary-hl-color;
@@ -132,7 +132,7 @@ QMenuBar {
     @v-spacing: 0;
 
     background-color: @rooms-tab-bg-color;
-    padding: 3 8 4 8;
+    padding: 2 8 3 8;
     margin: 0 -1 0 0; // pull in right by 1px to overlap tab borders
     border-color: @rooms-tab-border-color;
     border-radius: 0;
@@ -172,9 +172,9 @@ QMenuBar {
   }
 
   & QToolButton { // scroll buttons
-    border-left: 2 solid @primary-border-color;
-    border-top: 1 solid @primary-border-color;
-    border-right: 1 solid @primary-border-color;
+    border-left: 2 solid @dark-border-color;
+    border-top: 1 solid @dark-border-color;
+    border-right: 1 solid @dark-border-color;
     border-bottom: 0;
     margin-left: -1;
     margin-top: 0;

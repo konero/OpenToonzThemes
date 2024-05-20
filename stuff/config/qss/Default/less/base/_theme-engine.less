@@ -15,44 +15,36 @@
 // contrast can be adjusted with @bg-contrast.
 // -----------------------------------------------------------------------------
 
-@shade-amount: 2.5;
-
 // Light Background Shades
 //! Do not modify!
-@ui-light1: lighten(@ui-color, @shade-amount * @bg-contrast);
-@ui-light2: lighten(@ui-color, (@shade-amount * 2) * @bg-contrast);
-@ui-light3: lighten(@ui-color, (@shade-amount * 3) * @bg-contrast);
-@ui-light4: lighten(@ui-color, (@shade-amount * 4) * @bg-contrast);
-@ui-light5: lighten(@ui-color, (@shade-amount * 5) * @bg-contrast);
-@ui-light6: lighten(@ui-color, (@shade-amount * 6) * @bg-contrast);
-@ui-light7: lighten(@ui-color, (@shade-amount * 7) * @bg-contrast);
-@ui-light8: lighten(@ui-color, (@shade-amount * 8) * @bg-contrast);
-@ui-light9: lighten(@ui-color, (@shade-amount * 9) * @bg-contrast);
+@ui-light1: lighten(@ui-color, @shade-amount * @bg-contrast-light);
+@ui-light2: lighten(@ui-color, (@shade-amount * 2) * @bg-contrast-light);
+@ui-light3: lighten(@ui-color, (@shade-amount * 3) * @bg-contrast-light);
+@ui-light4: lighten(@ui-color, (@shade-amount * 4) * @bg-contrast-light);
+@ui-light5: lighten(@ui-color, (@shade-amount * 5) * @bg-contrast-light);
+@ui-light6: lighten(@ui-color, (@shade-amount * 6) * @bg-contrast-light);
+@ui-light7: lighten(@ui-color, (@shade-amount * 7) * @bg-contrast-light);
+@ui-light8: lighten(@ui-color, (@shade-amount * 8) * @bg-contrast-light);
+@ui-light9: lighten(@ui-color, (@shade-amount * 9) * @bg-contrast-light);
+@ui-light10: lighten(@ui-color, (@shade-amount * 10) * @bg-contrast-light);
 
 // Dark Dackground Shades
 //! Do not modify!
-@ui-dark1: darken(@ui-color, @shade-amount * @bg-contrast);
-@ui-dark2: darken(@ui-color, (@shade-amount * 2) * @bg-contrast);
-@ui-dark3: darken(@ui-color, (@shade-amount * 3) * @bg-contrast);
-@ui-dark4: darken(@ui-color, (@shade-amount * 4) * @bg-contrast);
-@ui-dark5: darken(@ui-color, (@shade-amount * 5) * @bg-contrast);
-@ui-dark6: darken(@ui-color, (@shade-amount * 6) * @bg-contrast);
-@ui-dark7: darken(@ui-color, (@shade-amount * 7) * @bg-contrast);
-@ui-dark8: darken(@ui-color, (@shade-amount * 8) * @bg-contrast);
-@ui-dark9: darken(@ui-color, (@shade-amount * 9) * @bg-contrast);
+@ui-dark1: darken(@ui-color, @shade-amount * @bg-contrast-dark);
+@ui-dark2: darken(@ui-color, (@shade-amount * 2) * @bg-contrast-dark);
+@ui-dark3: darken(@ui-color, (@shade-amount * 3) * @bg-contrast-dark);
+@ui-dark4: darken(@ui-color, (@shade-amount * 4) * @bg-contrast-dark);
+@ui-dark5: darken(@ui-color, (@shade-amount * 5) * @bg-contrast-dark);
+@ui-dark6: darken(@ui-color, (@shade-amount * 6) * @bg-contrast-dark);
+@ui-dark7: darken(@ui-color, (@shade-amount * 7) * @bg-contrast-dark);
+@ui-dark8: darken(@ui-color, (@shade-amount * 8) * @bg-contrast-dark);
+@ui-dark9: darken(@ui-color, (@shade-amount * 9) * @bg-contrast-dark);
+@ui-dark10: darken(@ui-color, (@shade-amount * 10) * @bg-contrast-dark);
 
 // -----------------------------------------------------------------------------
 // Border Colors:
 // Likewise, the contrast of the borders can be adjusted with @border-contrast.
 // -----------------------------------------------------------------------------
 
-@ui-border-light1: lighten(@ui-color, 15%);
-@ui-border-dark1: darken(@ui-color, 17.5%);
-
-// Used for GroupBoxes, Tabs, containers, important things, etc.
-@primary-border-color: if(@high-contrast,
-                         lighten(@ui-border-light1, @border-contrast),
-                         darken(@ui-border-dark1, @border-contrast));
-
-// Used for underlining titlebars, less important things, etc.
-@secondary-border-color: darken(@ui-border-dark1, @border-contrast);
+@dark-border-color: darken(@ui-color, 17.5% * @border-contrast-dark);
+@light-border-color: lighten(@ui-color, 15% * @border-contrast-light);

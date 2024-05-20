@@ -4,9 +4,10 @@
 
 QDialog {
   background-color: @ui-color;
+  
   & #dialogButtonFrame {
     background-color: @ui-dark2;
-    border-top: 1 solid @primary-border-color;
+    border-top: 1 solid @dark-border-color;
 
     & QPushButton {
       outline: 0;
@@ -49,7 +50,7 @@ QDialog {
   & QListWidget {
     background-color: @tree-bg-color;
     alternate-background-color: @tree-bg-color;
-    border: 1 solid @primary-border-color;
+    border: 1 solid @toolbar-separator-color;
     font-size: 13px;
 
     &::item {
@@ -78,7 +79,7 @@ QDialog {
     padding: 1 0;
   }
 
-  border: 1 solid @primary-border-color;
+  border: 1 solid @dark-border-color;
 
   & QScrollBar {
     &:vertical {
@@ -120,7 +121,7 @@ ProjectPopup {
 
 #GearButton {
   &::menu-indicator {
-    image: url("");
+    image: none;
   }
 }
 
@@ -128,7 +129,7 @@ ProjectPopup {
   qproperty-icon: url('@{img-url}/liveview.svg');
   
   &::menu-indicator {
-    image:"";
+    image: none;
   }
 }
 
@@ -147,9 +148,9 @@ ProjectPopup {
 ----------------------------------------------------------------------------- */
 
 #FrameFormatBoxInput {
-  border-color: mix(@secondary-border-color, rgba(255, 0, 0, 0.7), 40%);
+  border-color: mix(@dark-border-color, rgba(255, 0, 0, 0.7), 40%);
 }
 
 #FrameFormatBoxOutput {
-  border-color: mix(@secondary-border-color, rgba(0, 0, 255, 0.7), 40%);
+  border-color: mix(@dark-border-color, rgba(0, 0, 255, 0.7), 40%);
 }

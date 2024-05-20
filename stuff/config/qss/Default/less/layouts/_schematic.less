@@ -4,7 +4,7 @@
 
 SchematicViewer {
   qproperty-TextColor: @node-text-color;
-  qproperty-PassThroughTextColor: @node-passthrough-text-color;
+  qproperty-PassThroughTextColor: if(lightness(@node-viewer-bg-color) >= 50%, rgba(black, 0.8), rgba(white, 0.8));
   qproperty-SelectedBorderColor: @node-selected-border-color;
   qproperty-VerticalLineColor: @node-VerticalLine-color; // #todo: redundant?
 
@@ -29,7 +29,7 @@ SchematicViewer {
 
   qproperty-GroupColor: @node-group-color;
   qproperty-SplineColor: @node-motion-path-color;
-  qproperty-PassThroughColor: @node-passthrough-color;
+  qproperty-PassThroughColor: if(lightness(@node-viewer-bg-color) >= 50%, hsl(0, 0%, 25%), hsl(0, 0%, 75%));
   qproperty-NormalFxColor: @node-normal-fx-color;
   qproperty-MacroFxColor: @node-macro-fx-color;
   qproperty-ImageAdjustFxColor: @node-image-adjust-fx-color;
@@ -37,20 +37,15 @@ SchematicViewer {
   qproperty-MatteFxColor: @node-matte-fx-color;
 
   qproperty-SchematicPreviewButtonBgOnColor: @node-preview-bg-on-color;
-  qproperty-SchematicPreviewButtonOnImage:
-    url('@{img-url}/schematic_preview_on.svg');
+  qproperty-SchematicPreviewButtonOnImage: url('@{img-url}/schematic_preview_on.svg');
   qproperty-SchematicPreviewButtonBgOffColor: @node-preview-bg-off-color;
-  qproperty-SchematicPreviewButtonOffImage:
-    url('@{img-url}/schematic_preview_off.svg');
+  qproperty-SchematicPreviewButtonOffImage: url('@{img-url}/schematic_preview_off.svg');
 
   qproperty-SchematicCamstandButtonBgOnColor: @node-camstand-bg-on-color;
-  qproperty-SchematicCamstandButtonOnImage:
-    url('@{img-url}/schematic_table_on.svg');
-  qproperty-SchematicCamstandButtonTranspImage:
-    url('@{img-url}/schematic_table_transp.svg');
+  qproperty-SchematicCamstandButtonOnImage: url('@{img-url}/schematic_table_on.svg');
+  qproperty-SchematicCamstandButtonTranspImage: url('@{img-url}/schematic_table_transp.svg');
   qproperty-SchematicCamstandButtonBgOffColor: @node-camstand-bg-off-color;
-  qproperty-SchematicCamstandButtonOffImage:
-    url('@{img-url}/schematic_table_off.svg');
+  qproperty-SchematicCamstandButtonOffImage: url('@{img-url}/schematic_table_off.svg');
 
   qproperty-LinkColor: @node-link-color;
   qproperty-SelectedLinkColor: @node-selected-link-color;
@@ -86,7 +81,7 @@ SchematicViewer {
 
 #SchematicSceneViewer {
   background-color: @node-viewer-bg-color;
-  border-bottom: 1 solid @primary-border-color;
+  border-bottom: 1 solid @dark-border-color;
 }
 
 // Schematic toolbars
@@ -104,6 +99,16 @@ QToolBar#MediumPaddingToolBar {
 //#FxSettingsTabBar {} // #todo: is this redundant?
 
 FxSettings {
+  & QSlider {
+    &::sub-page {
+      background-color: @slider-groove-color;
+    }
+  }
+
+  & #DoublePairField {
+    qproperty-GrooveValueColor: @slider-groove-color;
+  }
+  
   & QToolBar {
     background-color: transparent;
     border: 0;

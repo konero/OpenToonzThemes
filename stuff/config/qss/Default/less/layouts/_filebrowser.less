@@ -6,7 +6,7 @@
 #DirTreeView {
   background-color: @tree-bg-color;
   alternate-background-color: @tree-bg-color-alt-row;
-  border: 1 solid @secondary-border-color;
+  border: 1 solid @dark-border-color;
   border-right: 0; // sits against QSplitter here, no need for border
 
   &::branch {
@@ -25,14 +25,14 @@
   }
 
   & #castFrame {
-    border: 1 solid @secondary-border-color;
+    border: 1 solid @dark-border-color;
     border-left: 0; // sits against QSplitter here, no need for border
     margin: 0;
   }
 
   & QSplitter::handle:horizontal {
-    border-top: 1 solid @secondary-border-color;
-    border-bottom: 1 solid @secondary-border-color;
+    border-top: 1 solid @dark-border-color;
+    border-bottom: 1 solid @dark-border-color;
   }
 }
 
@@ -71,7 +71,7 @@ StyledTreeView {
   qproperty-SelectedFolderTextColor: @browser-folder-text-color-selected;
   alternate-background-color: @tree-bg-color-alt-row;
   background-color: @tree-bg-color;
-  border: 1 solid @primary-border-color;
+  border: 1 solid @dark-border-color;
 }
 
 #FileDoesNotExistLabel {
@@ -84,7 +84,7 @@ StyledTreeView {
 
 #SceneCast {
   & QToolBar {
-    border-top: 1 solid @primary-border-color;
+    border-top: 1 solid @dark-border-color;
 
     &::separator {
       &:horizontal {
@@ -107,5 +107,5 @@ StyledTreeView {
 }
 
 #CastBrowserFolderName {
-  border-bottom: 1 solid @secondary-border-color;
+  border-bottom: 1 solid @dark-border-color;
 }

@@ -4,7 +4,7 @@
 
 #ComboViewerPanel {
   & Toolbar {
-    border-bottom: 1 solid @primary-border-color; // line against viewport
+    border-bottom: 1 solid @dark-border-color; // line against viewport
 
     &::separator:horizontal {
       margin: 0 0 0 2;
@@ -28,7 +28,7 @@
 }
 
 #ComboViewerToolOptions {
-  border-bottom: 1 solid @primary-border-color; // border viewport
+  border-bottom: 1 solid @dark-border-color; // border viewport
 
   & #ScrollLeftButton,
   & #ScrollRightButton {
@@ -51,8 +51,8 @@
 FlipBook {
   & #ToolBarContainer {
     background-color: transparent;
-    border-top: 1 solid @primary-border-color; // border viewport
-    border-bottom: 1 solid @primary-border-color;
+    border-top: 1 solid @dark-border-color; // border viewport
+    border-bottom: 1 solid @dark-border-color;
 
     & #ScrollRightButton {
       margin-right: 0; /* #ScrollRightButton has a border and the right side is
@@ -79,7 +79,7 @@ FlipBook {
 
 QToolBar#FlipConsolePlayToolBar {
   &::separator:horizontal {
-    border-color: @primary-border-color;
+    border-color: @toolbar-separator-color;
     margin: 0 1 0 1;
   }
 
@@ -109,13 +109,13 @@ QToolBar#FlipConsolePlayToolBar {
 #ViewerFpsSlider {
   // This is a customized QScrollBar!
   background-color: transparent;
-  background-image: url('@{img-url}/@{slider-groove-img}');
-  background-position: center center;
+  background-image: @slider-groove-img;
   background-repeat: repeat-x;
-  border: 0;
+  background-size: auto 5;
+  background-position: center center;
   height: 21;
   margin: 0 3 0 37;
-  max-width: 300;
+  max-width: 500;
   min-width: 0;
 
   &::sub-line:horizontal {
@@ -154,8 +154,8 @@ QToolBar#FlipConsolePlayToolBar {
     }
 
     &:disabled {
-      background-color: mix(@button-bg-color, @ui-color, @disabled-amount);
-      border-color: mix(@ui-color, @button-border-color, @disabled-amount);
+      background-color: mix(@button-bg-color, @ui-color, @disabled-opacity);
+      border-color: mix(@ui-color, @button-border-color, @disabled-opacity);
       color: @text-color-disabled;
     }
   }
@@ -164,7 +164,7 @@ QToolBar#FlipConsolePlayToolBar {
     &::horizontal {
       @size: 9;
       background-color: @slider-handle-bg-color;
-      border: 0;
+      border: 1 solid @dark-border-color;
       border-radius: 2;
       margin: 2 0 3 0;
       min-width: @size;
@@ -172,7 +172,11 @@ QToolBar#FlipConsolePlayToolBar {
       max-width: @size;
 
       &:hover {
-        background-color: @slider-handle-bg-color-hover;
+        background-color: lighten(@slider-handle-bg-color, @hover-strength);
+      }
+
+      &:pressed {
+        background-color: darken(@slider-handle-bg-color, @hover-strength);
       }
     }
   }
@@ -187,10 +191,10 @@ FlipSlider {
 
   // Slider
   qproperty-PBOverlay: url('@{img-url}/@{flipslider-img}');
-  qproperty-PBColorMarginLeft: 1;
-  qproperty-PBColorMarginTop: 4;
-  qproperty-PBColorMarginRight: 1;
-  qproperty-PBColorMarginBottom: 4;
+  qproperty-PBColorMarginLeft: 2;
+  qproperty-PBColorMarginTop: 3;
+  qproperty-PBColorMarginRight: 2;
+  qproperty-PBColorMarginBottom: 3;
   
   // Marker
   qproperty-PBMarker: url('@{img-url}/@{flipmarker-img}');
@@ -225,10 +229,10 @@ Ruler {
 
   &:checked {
     border-width: 2;
-    border-color: @secondary-border-color;
+    border-color: @dark-border-color;
 
     &:hover {
-      border-color: @primary-border-color;
+      border-color: @dark-border-color;
     }
   }
 }

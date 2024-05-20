@@ -5,13 +5,42 @@
 // -----------------------------------------------------------------------------
 
 // Imports
-@import 'default-theme.less';
+@import '../default/default-theme.less';
 
 // -----------------------------------------------------------------------------
+// Config
+// -----------------------------------------------------------------------------
 
+// Is Dark Theme?
+@dark-theme: true;
+
+// Image Path (relative to where the Default.qss file output is)
 @img-url: '../Default/imgs/white';
 
-// -----------------------------------------------------------------------------
+// Adjust Shading
+@bg-contrast-dark: 0.8;
+@border-contrast-dark: 1.7%;
+@border-contrast-light: 1.0%;
 
 // Interface Colors
-@ui-color: #2d2d2d;
+@ui-color: rgb(48, 48, 48);
+@hl-color: rgb(45, 114, 182);
+
+// -----------------------------------------------------------------------------
+// Overrides
+// -----------------------------------------------------------------------------
+
+@input-border-color: @ui-light5;
+@tree-bg-color-alt-row: rgba(255, 255, 255, 0.03);
+@slider-groove-img: url('@{img-url}/dark-theme/slider-groove.svg');
+@flipmarker-img: 'dark-theme/flipmarker.svg';
+@flipslider-img: 'dark-theme/flipslider.svg';
+
+// -----------------------------------------------------------------------------
+// X-Sheet Overrides
+// -----------------------------------------------------------------------------
+
+@xsh-bg-contrast-dark: -4%;
+@xsh-bg-contrast-light: 4%;
+@xsh-lines-contrast: 1.4;
+@xsh-play-range-row-bg-color: hsl(hue(@hl-color), 8%, 30%);
