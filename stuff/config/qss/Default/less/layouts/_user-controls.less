@@ -20,14 +20,20 @@ QPushButton {
 ----------------------------------------------------------------------------- */
 
 QComboBox {
+  // We style QComboBox to look the same as QPushButton, but be aware we cannot
+  // include the .main-button-style() due to differences in pseudo-classes.
   background-color: @button-bg-color;
   border-color: @button-border-color;
-  border-width: @button-border-width;
+  border-width: 1;
   border-style: solid;
   border-radius: @button-border-radius;
   color: @button-text-color;
   margin: 0;
   padding: 1 0 1 4;
+
+  & when (@gradient-effect = true) {
+    .gradient-effect-vertical();
+  }
 
   &:hover {
     background-color: @button-bg-color-hover;
@@ -36,29 +42,29 @@ QComboBox {
   }
 
   &:checked {
-    border-color: @hl-color;
+    border-color: @combobox-border-color-focus;
   }
 
   &:pressed {
     background-color: @button-bg-color;
-    border-color: @button-border-color;
-    color: if(lightness(@button-bg-color) > 50%, #000, #fff);
+    border-color: @combobox-border-color-focus;
+    color: @button-text-color-pressed;
 
     &:focus {
       background-color: @button-bg-color;
-      border-color: @hl-color;
+      border-color: @combobox-border-color-focus;
     }
   }
 
   &:disabled {
-    background-color: mix(@button-bg-color, @ui-color, @disabled-opacity);
-    border-color: mix(@button-border-color, @ui-color, @disabled-opacity);
+    background-color: @button-bg-color-disabled;
+    border-color: @button-border-color-disabled;
     color: @text-color-disabled;
   }
 
   &:focus {
     background-color: @button-bg-color;
-    border-color: @hl-color;
+    border-color: @combobox-border-color-focus;
 
     &:hover {
       background-color: @button-bg-color-hover;
@@ -67,14 +73,16 @@ QComboBox {
 
   &:editable {
     color: @input-text-color;
+    background: none; // reset gradient-effect if used
     background-color: @input-bg-color;
     border-color: @input-border-color;
     selection-background-color: @input-selection-bg-color;
     selection-color: @input-selection-text-color;
     padding: 1 0 1 3;
-
+    
     &:hover {
-      background-color: @input-bg-color;
+      background-color: @input-bg-color-hover;
+      border-color: @input-border-color-hover;
     }
 
     &:checked {
@@ -88,23 +96,27 @@ QComboBox {
 
   &::drop-down {
     border: 0 solid transparent; // make invisible
-    image: url('@{img-url}/combo_downarrow.svg');
+    image: url('@{img-url}/combobox/combo_downarrow.svg');
     image-position: center center;
     width: 16;
 
     &:disabled {
-      image: url('@{img-url}/combo_downarrow_disabled.svg');
+      image: url('@{img-url}/combobox/combo_downarrow_disabled.svg');
 
       &:editable {
-        background-color: mix(@button-bg-color, @ui-color, @disabled-opacity);
+        background-color: @button-bg-color-disabled;
       }
     }
 
     &:editable {
       background-color: @button-bg-color;
-      border-left: 1 solid @dark-border-color;
+      border-left: 1 solid @border-color;
       border-top-right-radius: min(0, @button-border-radius - 1);
       border-bottom-right-radius: min(0, @button-border-radius - 1);
+
+      & when (@gradient-effect = true) {
+        .gradient-effect-vertical();
+      }
   
       &:hover {
         background-color: @button-bg-color-hover;
@@ -122,7 +134,7 @@ QComboBox {
 }
 
 /* -----------------------------------------------------------------------------
-   Text Fields
+   Textfields
 ----------------------------------------------------------------------------- */
 
 QPlainTextEdit,
@@ -133,13 +145,13 @@ QTextEdit[readOnly="false"] {
 
 // Reset all styles for read-only QTextEdit
 QTextEdit[readOnly="true"] {
-  background-color: @ui-color;
+  background-color: @bg-color;
   color: @text-color;
   border: 0;
 
   &:focus,
   &:disabled {
-    background-color: @ui-color;
+    background-color: @bg-color;
     color: @text-color;
     border: 0;
   }
@@ -150,10 +162,12 @@ QTextEdit[readOnly="true"] {
 ----------------------------------------------------------------------------- */
 
 QCheckBox {
-  background-color: transparent;
   color: @text-color;
+  padding: 0 2 0 0;
+  border-radius: 2;
 
   &:hover {
+    background-color: @checkbox-text-bg-color-hover;
     color: @checkbox-text-color-hover;
   }
 
@@ -168,8 +182,6 @@ QCheckBox {
 
 QRadioButton {
   color: @text-color;
-  padding: 0;
-  margin: 0;
 
   &:hover {
     color: @checkbox-text-color-hover;
@@ -203,9 +215,11 @@ QGroupBox {
     left: 15;
     margin: -2 0 0 0;
     padding: 0 3;
+    border-radius: 2;
 
     &:hover {
       color: @checkbox-text-color-hover;
+      background-color: @checkbox-text-bg-color-hover;
     }
 
     &:disabled {
@@ -234,11 +248,11 @@ QSlider {
   &::sub-page {
     background-color: @slider-groove-value-color;
     border: 1 solid @slider-groove-border-color;
-    border-radius: @slider-groove-radius;
+    border-radius: 2;
     
     &:disabled {
-      background-color: desaturate(mix(@slider-groove-value-color, @ui-color, @disabled-opacity), 100%);
-      border-color: mix(@slider-groove-border-color, @ui-color, @disabled-opacity);
+      background-color: desaturate(mix(@slider-groove-value-color, @bg-color, @disabled-amount), 100%);
+      border-color: mix(@slider-groove-border-color, @bg-color, @disabled-amount);
     }
     
     &:horizontal {
@@ -252,11 +266,11 @@ QSlider {
   &::add-page {
     background-color: @slider-groove-color;
     border: 1 solid @slider-groove-border-color;
-    border-radius: @slider-groove-radius;
+    border-radius: 2;
     
     &:disabled {
-      background-color: mix(@slider-groove-color, @ui-color, @disabled-opacity);
-      border-color: mix(@slider-groove-border-color, @ui-color, @disabled-opacity);
+      background-color: mix(@slider-groove-color, @bg-color, @disabled-amount);
+      border-color: mix(@slider-groove-border-color, @bg-color, @disabled-amount);
     }
     
     &:horizontal {
@@ -321,11 +335,11 @@ QSlider {
 	qproperty-DarkLineColor: @slider-groove-color;
   qproperty-MiddleLineColor: @slider-groove-color;
 
-	qproperty-HandleLeftPixmap: url("@{img-url}/@{slider-left-handle}");
-	qproperty-HandleRightPixmap: url("@{img-url}/@{slider-right-handle}");
+	qproperty-HandleLeftPixmap: url("@{img-url}/@{slider-handle-img}");
+	qproperty-HandleRightPixmap: url("@{img-url}/@{slider-handle-img}");
 
-	qproperty-HandleLeftGrayPixmap: url("@{img-url}/@{slider-left-handle-disabled}");
-  qproperty-HandleRightGrayPixmap: url("@{img-url}/@{slider-right-handle-disabled}");
+	qproperty-HandleLeftGrayPixmap: url("@{img-url}/@{slider-handle-img-disabled}");
+  qproperty-HandleRightGrayPixmap: url("@{img-url}/@{slider-handle-img-disabled}");
 }
 
 /* -----------------------------------------------------------------------------
@@ -357,29 +371,13 @@ QToolButton {
   &::menu-button {
     border-image: none;
   }
-
-  & #qt_toolbar_ext_button {
-    padding: 0;
-    border: 0;
-    margin: 0;
-    background-image: url('@{img-url}/toolbar_extension_horizontal.png');
-
-    &:hover {
-      background-color: @button-bg-color-hover;
-    }
-
-    &:pressed {
-      background-color: @button-bg-color-checked;
-    }
-  }
 }
 
 /* -----------------------------------------------------------------------------
    QToolBar (and misc Toolbars)
 ----------------------------------------------------------------------------- */
-// Do not be confused! This is the 'QToolBar' Qt widget, not the ToolBar window!
-// However, the window incorporates a QToolBar, so the styles shown here may
-// also apply!
+// The following is for QToolBar Qt widget and not ToolBar panel. But note, the
+// panel incorporates a QToolBar so the styles below will appear in the panel.
 
 QToolBar {
   padding: 0;
@@ -400,16 +398,6 @@ QToolBar {
     }
   }
 
-  & #qt_toolbar_ext_button {
-    // #todo
-    // .scroll-button-style();
-    border-radius: 0;
-    margin: 0;
-    background-image: url('@{img-url}/toolbar_extension_horizontal.png');
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
   & QLabel {
     margin-top: 1;
   }
@@ -419,6 +407,16 @@ QToolBar {
   }
 }
 
+QToolBarExtension {
+  margin: 0;
+  padding: 0;
+  qproperty-icon: none; // hide default Qt icon
+  background-image: url('@{img-url}/misc/toolbar_extension_horizontal.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+// Is the following unused?
 // DvScrollWidget ToolBar
 // DvScrollWidget {}
 
@@ -427,7 +425,7 @@ QToolBar {
 #ScrollUpButton,
 #ScrollDownButton {
   .scroll-button-style();
-  min-width: 20; // fixes 'viewer play console' left scroll button size
+  min-width: 20; // fixes 'viewer console' left scroll button size
 }
 
 #ScrollLeftButton {
@@ -447,10 +445,9 @@ QToolBar {
 }
 
 /* -----------------------------------------------------------------------------
-   Frame Navigator
+   Frame Navigator Widget
 ----------------------------------------------------------------------------- */
 
-// FrameNavigator
 QToolBar#WidePaddingToolBar {
   margin: 0;
   padding: 0;
@@ -468,15 +465,15 @@ QToolBar#WidePaddingToolBar {
 ----------------------------------------------------------------------------- */
 
 QTreeWidget {
-  .treeview-item-style();
+  .treeview-item-style(true);
   
   &::branch {
     .treeview-branch-style();
   }
 }
 
-QTreeView {
-  .treeview-item-style();
+QTreeView { // Menu editor
+  .treeview-item-style(true);
 
   &::branch {
     .treeview-branch-style();
@@ -505,7 +502,7 @@ QHeaderView::section {
    Tabs
 ----------------------------------------------------------------------------- */
 
-// Round contained float style, seen in Startup window, Project settings, etc.
+// Round style, seen in Startup Popup, etc.
 QTabWidget::pane {
   background-color: transparent;
   top: -1; // move border under tabs
@@ -525,6 +522,10 @@ QTabBar {
     margin-bottom: 0;
     margin-left: 0;
     padding: 2 @h-padding 1 @h-padding;
+  
+    & when (@gradient-effect = true) {
+      .gradient-effect-vertical();
+    }
 
     &:hover {
       background-color: @tab-bg-color-hover;
@@ -562,19 +563,9 @@ QTabBar {
   & QToolButton {
     // Scroll buttons
     .scroll-button-style(@width: 16, @radius: 0);
-    padding: 3 2 2 2;
-
-    & when(@scroll-button-border-color = @title-border-color) {
-      border-top-width: 0;
-    }
-    
-    // If scroll-button border lightness is different enough to title border -/+
-    & when(lightness(@scroll-button-border-color) <= lightness(@title-border-color) - 5%) {
-      border-top-width: 1;
-    }
-    & when(lightness(@scroll-button-border-color) >= lightness(@title-border-color) + 5%) {
-      border-top-width: 1;
-    }
+    @margin-top: -1;
+    margin-top: @margin-top;
+    padding: (3 + abs(@margin-top)) 2 2 2;
   }
 }
 
@@ -582,7 +573,11 @@ QTabBar {
 #TabBarContainer {
   background-color: @tabbar-bg-color;
   qproperty-BottomAboveLineColor: @tabbar-bg-color;
-  qproperty-BottomBelowLineColor: @dark-border-color;
+  qproperty-BottomBelowLineColor: @border-color;
+
+  & when (@gradient-effect = true) {
+    .gradient-effect-vertical();
+  }
   
   & QTabBar {
     &::tab {
@@ -590,18 +585,16 @@ QTabBar {
       @v-padding: 3;
     
       background-color: @tab-bg-color;
-      border: 1 solid @tab-flat-style-border-color;
+      border: 1 solid @tab-border-color;
+      border-top-width: 0;
       border-left-width: 0;
       border-radius: 0;
       color: @tab-text-color;
       padding: @v-padding @h-padding;
       margin: 0;
-    
-      & when (@tab-flat-style-border-color = @title-border-color) {
-        /* This will prevent top-border of the tab and the bottom-border of the
-           titlebar combining which causes the style to look double thickness
-           when the border colors of both elements are the same. */
-        border-top-color: transparent;
+
+      & when (@gradient-effect = true) {
+        .gradient-effect-vertical();
       }
     
       &:hover {
@@ -612,15 +605,9 @@ QTabBar {
       &:selected {
         background-color: @tab-bg-color-selected;
         color: @tab-text-color-selected;
-        border-color: @tab-flat-style-border-color;
+        border-color: @tab-border-color;
+        border-top-color: transparent;
         border-bottom-color: @tab-bg-color-selected;
-    
-        & when (@tab-flat-style-border-color = @title-border-color) {
-          /* This will prevent top-border of the tab and the bottom-border of
-             the titlebar combining which causes the style to look double
-             thickness when the border colors of both elements are the same. */
-          border-top-color: transparent;
-        }
       }
     }
   }

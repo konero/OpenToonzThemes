@@ -3,11 +3,15 @@
 ----------------------------------------------------------------------------- */
 
 QDialog {
-  background-color: @ui-color;
+  background-color: @bg-color;
   
   & #dialogButtonFrame {
-    background-color: @ui-dark2;
-    border-top: 1 solid @dark-border-color;
+    background-color: @popup-dialog-button-frame-bg-color;
+    border-top: 1 solid @groupbox-border-color;
+
+    & when(@titlebar-gradient-effect = true) {
+      .gradient-effect-vertical-inverted();
+    }
 
     & QPushButton {
       outline: 0;
@@ -48,9 +52,9 @@ QDialog {
 
 #PreferencesPopup, #OutputSettingsPopup {
   & QListWidget {
-    background-color: @tree-bg-color;
-    alternate-background-color: @tree-bg-color;
-    border: 1 solid @toolbar-separator-color;
+    background-color: @list-bg-color;
+    alternate-background-color: @list-bg-color;
+    border: 1 solid @groupbox-border-color;
     font-size: 13px;
 
     &::item {
@@ -58,13 +62,13 @@ QDialog {
       padding: 3;
 
       &:hover {
-        background-color: @secondary-hl-color;
-        color: @secondary-hl-text-color;
+        background-color: lighten(@tree-bg-color, 8% * @hover-adjust-amount);
+        color: @hl-text-color;
       }
 
       &:selected {
-        background-color: @hl-color;
-        color: @hl-text-color;
+        background-color: @menubar-item-bg-color-selected;
+        color: @menu-item-text-color-selected;
       }
     }
   }
@@ -79,7 +83,7 @@ QDialog {
     padding: 1 0;
   }
 
-  border: 1 solid @dark-border-color;
+  border: 1 solid @border-color;
 
   & QScrollBar {
     &:vertical {
@@ -126,7 +130,7 @@ ProjectPopup {
 }
 
 #LiveViewButton {
-  qproperty-icon: url('@{img-url}/liveview.svg');
+  qproperty-icon: url('@{img-url}/misc/liveview.svg');
   
   &::menu-indicator {
     image: none;
@@ -148,9 +152,9 @@ ProjectPopup {
 ----------------------------------------------------------------------------- */
 
 #FrameFormatBoxInput {
-  border-color: mix(@dark-border-color, rgba(255, 0, 0, 0.7), 40%);
+  border-color: mix(@border-color, rgba(255, 0, 0, 0.7), 40%);
 }
 
 #FrameFormatBoxOutput {
-  border-color: mix(@dark-border-color, rgba(0, 0, 255, 0.7), 40%);
+  border-color: mix(@border-color, rgba(0, 0, 255, 0.7), 40%);
 }

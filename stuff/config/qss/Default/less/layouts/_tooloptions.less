@@ -14,10 +14,14 @@
   & TPanelTitleBar {
     border-bottom: 0;
     border-radius: 0;
-    border-top-left-radius: @title-border-radius;
-    border-bottom-left-radius: @title-border-radius;
-    border-right: @title-border-width solid @title-border-color;
+    border-top-left-radius: @titlebar-border-radius;
+    border-bottom-left-radius: @titlebar-border-radius;
+    border-right: 1 solid @border-color;
     max-width: 18;
+
+    & when (@titlebar-gradient-effect = true) {
+      .gradient-effect-horizontal();
+    }
   }
 
   & #ScrollLeftButton,
@@ -44,15 +48,15 @@ PopupButton {
   &::menu-indicator {
     border-left: 0;
     height: 17;
-    image: url('@{img-url}/combo_downarrow.svg');
+    image: url('@{img-url}/combobox/combo_downarrow.svg');
     width: 10;
 
     &:hover {
-      image: url('@{img-url}/combo_downarrow.svg');
+      image: url('@{img-url}/combobox/combo_downarrow.svg');
     }
 
     &:disabled {
-      image: url('@{img-url}/combo_downarrow_disabled.svg');
+      image: url('@{img-url}/combobox/combo_downarrow_disabled.svg');
     }
   }
 }

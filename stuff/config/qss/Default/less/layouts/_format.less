@@ -82,6 +82,10 @@ ParamsPage {
 
 #OutputSettingsLabel {
   color: @normal-label-color;
+
+  & when(@bold-label-text = true) {
+    font-weight: bold;
+  }
 }
 
 #OutputSettingsBox {

@@ -19,37 +19,55 @@
   }
 
   #KeyNo {
-    background-color: @keyframe-off-color;
-    border: 1px solid @keyframe-off-border-color;
+    background-color: @toolbutton-bg-color;
+    border: 1px solid @toolbutton-border-color;
+
+    &:hover {
+      background-color: @toolbutton-bg-color-hover;
+      border-color: @toolbutton-border-color-hover;
+    }
+
+    &:pressed {
+      background-color: @toolbutton-bg-color-pressed;
+      border-color: @toolbutton-border-color-pressed;
+    }
   }
 
   #KeyPartial {
-    background-color: @keyframe-partial-color;
-    border: 1px solid @keyframe-partial-border-color;
+    background-color: @keyframe-total-color;
+    border: 1px solid @keyframe-total-border-color;
+
+    &::hover {
+      background-color: @keyframe-total-color-hover;
+      border-color: @keyframe-total-border-color;
+    }
+
+    &:pressed {
+      background-color: darken(@keyframe-total-color, 8% * @pressed-adjust-amount);
+      border-color: @keyframe-total-border-color;
+    }
   }
 
   #KeyTotal {
     background-color: @keyframe-total-color;
     border: 1px solid @keyframe-total-border-color;
-  }
 
-  #KeyNo:hover {
-    background-color: @keyframe-off-color-hover;
-    border-color: @keyframe-off-border-color-hover;
-  }
+    &:hover {
+      background-color: @keyframe-total-color-hover;
+      border-color: @keyframe-total-border-color-hover;
+    }
 
-  #KeyPartial:hover {
-    background-color: @keyframe-partial-color-hover;
-    border-color: @keyframe-partial-border-color-hover;
-  }
-
-  #KeyTotal:hover {
-    background-color: @keyframe-total-color-hover;
-    border-color: @keyframe-total-border-color-hover;
+    &:pressed {
+      background-color: darken(@keyframe-total-color, 8% * @pressed-adjust-amount);
+      border-color: @keyframe-total-border-color;
+  
+    }
   }
 
   & QToolButton#qt_toolbar_ext_button {
-    padding-bottom: 3px;
-    border-radius: 2px;
+    // Very squished and glitchy, the best we can do is extend the height a bit
+    // as seen in the Function Editor panel (top)
+    padding-bottom: 3;
+    border-radius: 2;
   }
 }

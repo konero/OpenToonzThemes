@@ -4,31 +4,30 @@
 
 #ComboViewerPanel {
   & Toolbar {
-    border-bottom: 1 solid @dark-border-color; // line against viewport
+    border-bottom: 1 solid @border-color; // line against viewport
 
     &::separator:horizontal {
-      margin: 0 0 0 2;
+      margin: 0 0 1 2; // 1 bottom margin prevents overlapping Toolbar border
       padding: 0;
     }
 
     & QToolButton {
-      margin: 2 0 3 2; // 1px extra for bottom to allow border-bottom to show
-                       // from ToolBar!
+      margin: 2 0 3 2; // 1px extra bottom-margin to allow border to show that
+                       // separates toolbar and viewer
       padding: 1 0 0 1;
     }
 
     & QToolButton#qt_toolbar_ext_button {
-      // #todo
-      // margin: 0;
-      // padding: 0;
-      // margin-bottom: 1;
-      // background-image: url('@{img-url}/toolbar_extension_horizontal.png');
+      margin: 0;
+      margin-bottom: 1; // so that the toolbar border shows
+      padding-top: 4;
+      background-image: url('@{img-url}/misc/toolbar_extension_horizontal.png');
     }
   }
 }
 
 #ComboViewerToolOptions {
-  border-bottom: 1 solid @dark-border-color; // border viewport
+  border-bottom: 1 solid @border-color; // border viewport
 
   & #ScrollLeftButton,
   & #ScrollRightButton {
@@ -51,8 +50,8 @@
 FlipBook {
   & #ToolBarContainer {
     background-color: transparent;
-    border-top: 1 solid @dark-border-color; // border viewport
-    border-bottom: 1 solid @dark-border-color;
+    border-top: 1 solid @border-color; // border between viewport
+    border-bottom: 1 solid @border-color;
 
     & #ScrollRightButton {
       margin-right: 0; /* #ScrollRightButton has a border and the right side is
@@ -85,6 +84,8 @@ QToolBar#FlipConsolePlayToolBar {
 
   & QToolButton {
     margin: 2 1 2 1;
+    padding-left: 2;
+    padding-right: 1; // one 1px less because Qt adds 1px extra by default here
   }
 
   & #KeyNo,
@@ -109,9 +110,8 @@ QToolBar#FlipConsolePlayToolBar {
 #ViewerFpsSlider {
   // This is a customized QScrollBar!
   background-color: transparent;
-  background-image: @slider-groove-img;
+  background-image: url('@{img-url}/@{slider-groove-img}');
   background-repeat: repeat-x;
-  background-size: auto 5;
   background-position: center center;
   height: 21;
   margin: 0 3 0 37;
@@ -120,8 +120,8 @@ QToolBar#FlipConsolePlayToolBar {
 
   &::sub-line:horizontal {
     subcontrol-origin: absolute;
-    background-color: @scroll-button-bg-color;
-    border: 1 solid @scroll-button-border-color;
+    background-color: @button-bg-color;
+    border: 1 solid @border-color;
     border-top-left-radius: 2;
     border-bottom-left-radius: 2;
     height: 19;
@@ -131,8 +131,8 @@ QToolBar#FlipConsolePlayToolBar {
 
   &::add-line:horizontal {
     subcontrol-position: left;
-    background-color: @scroll-button-bg-color;
-    border: 1 solid @scroll-button-border-color;
+    background-color: @button-bg-color;
+    border: 1 solid @border-color;
     border-top-right-radius: 2;
     border-bottom-right-radius: 2;
     left: 18;
@@ -143,9 +143,13 @@ QToolBar#FlipConsolePlayToolBar {
 
   &::sub-line:horizontal,
   &::add-line:horizontal {
+    & when (@gradient-effect = true) {
+      .gradient-effect-vertical();
+    }
+
     &:hover {
-      background-color: @scroll-button-bg-color-hover;
-      border-color: @scroll-button-border-color;
+      background-color: @button-bg-color-hover;
+      border-color: @border-color;
       color: @button-text-color-hover;
     }
 
@@ -154,8 +158,8 @@ QToolBar#FlipConsolePlayToolBar {
     }
 
     &:disabled {
-      background-color: mix(@button-bg-color, @ui-color, @disabled-opacity);
-      border-color: mix(@ui-color, @button-border-color, @disabled-opacity);
+      background-color: @button-bg-color-disabled;
+      border-color: @button-border-color-disabled;
       color: @text-color-disabled;
     }
   }
@@ -164,7 +168,7 @@ QToolBar#FlipConsolePlayToolBar {
     &::horizontal {
       @size: 9;
       background-color: @slider-handle-bg-color;
-      border: 1 solid @dark-border-color;
+      border: 1 solid @slider-handle-border-color;
       border-radius: 2;
       margin: 2 0 3 0;
       min-width: @size;
@@ -172,11 +176,11 @@ QToolBar#FlipConsolePlayToolBar {
       max-width: @size;
 
       &:hover {
-        background-color: lighten(@slider-handle-bg-color, @hover-strength);
+        background-color: lighten(@slider-handle-bg-color, 8% * @hover-adjust-amount);
       }
 
       &:pressed {
-        background-color: darken(@slider-handle-bg-color, @hover-strength);
+        background-color: darken(@slider-handle-bg-color, 8% * @pressed-adjust-amount);
       }
     }
   }
@@ -191,9 +195,9 @@ FlipSlider {
 
   // Slider
   qproperty-PBOverlay: url('@{img-url}/@{flipslider-img}');
-  qproperty-PBColorMarginLeft: 2;
+  qproperty-PBColorMarginLeft: 1;
   qproperty-PBColorMarginTop: 3;
-  qproperty-PBColorMarginRight: 2;
+  qproperty-PBColorMarginRight: 1;
   qproperty-PBColorMarginBottom: 3;
   
   // Marker
@@ -229,10 +233,10 @@ Ruler {
 
   &:checked {
     border-width: 2;
-    border-color: @dark-border-color;
+    border-color: @border-color;
 
     &:hover {
-      border-color: @dark-border-color;
+      border-color: @border-color;
     }
   }
 }

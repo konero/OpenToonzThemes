@@ -1,27 +1,70 @@
 // -----------------------------------------------------------------------------
-// Main Buttons
+// 3D Effect
+// -----------------------------------------------------------------------------
+
+// The images are a white gradient, don't bother using these over light colors
+.gradient-effect-vertical() {
+  background-image: url('@{img-url}/misc/gradient-vertical.svg');
+  background-position: top left;
+  background-repeat: repeat-x;
+}
+
+.gradient-effect-vertical-inverted() {
+  background-image: url('@{img-url}/misc/gradient-vertical-inverted.svg');
+  background-position: bottom left;
+  background-repeat: repeat-x;
+}
+
+.gradient-effect-vertical-small() { // useful on scrollbars
+  background-image: url('@{img-url}/misc/gradient-vertical_small.svg');
+  background-position: top left;
+  background-repeat: repeat-x;
+}
+
+.gradient-effect-horizontal() {
+  background-image: url('@{img-url}/misc/gradient-horizontal.svg');
+  background-position: top left;
+  background-repeat: repeat-y;
+}
+
+.gradient-effect-horizontal-small() { // useful on scrollbars
+  background-image: url('@{img-url}/misc/gradient-horizontal_small.svg');
+  background-position: top left;
+  background-repeat: repeat-y;
+}
+
+// -----------------------------------------------------------------------------
+// Main Button
 // -----------------------------------------------------------------------------
 
 .main-button-style() {
   background-color: @button-bg-color;
   border-color: @button-border-color;
-  border-width: @button-border-width;
+  border-width: 1;
   border-style: solid;
   border-radius: @button-border-radius;
   color: @button-text-color;
   margin: 0;
-  padding: 2 15;
+  padding: @button-v-padding @button-h-padding;
+
+  & when (@gradient-effect = true) {
+    .gradient-effect-vertical();
+  }
 
   &:hover {
     background-color: @button-bg-color-hover;
-    color: @button-text-color-hover;
     border-color: @button-border-color-hover;
+    color: @button-text-color-hover;
   }
 
   &:pressed {
     background-color: @button-bg-color-pressed;
     border-color: @button-border-color-pressed;
     color: @button-text-color-pressed;
+
+    & when (@gradient-effect = true) {
+      .gradient-effect-vertical-inverted();
+    }
   }
 
   &:checked {
@@ -29,19 +72,23 @@
     border-color: @button-border-color-checked;
     color: @button-text-color-checked;
 
-    &:hover {
-      background-color: lighten(@button-bg-color-checked, @hover-strength);
-      border-color: @button-border-color-checked;
+    & when (@gradient-effect = true) {
+      .gradient-effect-vertical-inverted();
+    }
 
-      &:pressed {
-        background-color: darken(@button-bg-color-checked, @hover-strength);
-      }
+    &:hover {
+      background-color: @button-bg-color-checked-hover;
+      border-color: @button-border-color-checked;
+    }
+
+    &:pressed {
+      background-color: @button-bg-color-pressed;
     }
   }
 
   &:disabled {
-    background-color: mix(@button-bg-color, @ui-color, @disabled-opacity);
-    border-color: mix(@button-border-color, @ui-color, @disabled-opacity);
+    background-color: @button-bg-color-disabled;
+    border-color: @button-border-color-disabled;
     color: @text-color-disabled;
   }
 }
@@ -56,11 +103,11 @@
     @padding-bottom: 0,
     @padding-left: 0
   ) {
-  // Qt has a default padding for QToolButtons, we need to reset it to get a
-  // pixel perfect style (-1 -1 -2 0)
+  // Qt (at least as of 5.15.2) has a default padding for QToolButtons, we need
+  // to reset it to get a pixel perfect style (-1 -1 -2 0)
   background-color: @toolbutton-bg-color;
-  border: @toolbutton-border-width solid @toolbutton-border-color;
-  border-radius: @toolbutton-border-radius;
+  border: 1 solid @toolbutton-border-color;
+  border-radius: @button-border-radius;
   color: @toolbutton-text-color;
   padding-top: @padding-top - 1;
   padding-right: @padding-right - 1;
@@ -71,12 +118,20 @@
     background-color: @toolbutton-bg-color-hover;
     border-color: @toolbutton-border-color-hover;
     color: @toolbutton-text-color-hover;
+
+    & when(@gradient-effect = true) {
+      .gradient-effect-vertical();
+    }
   }
 
   &:pressed {
     background-color: @toolbutton-bg-color-pressed;
     border-color: @toolbutton-border-color-pressed;
     color: @toolbutton-text-color-pressed;
+
+    & when(@gradient-effect = true) {
+      .gradient-effect-vertical-inverted();
+    }
   }
   
   &:checked {
@@ -84,29 +139,38 @@
     border-color: @toolbutton-border-color-checked;
     color: @toolbutton-text-color-checked;
 
+    & when(@gradient-effect = true) {
+      .gradient-effect-vertical();
+    }
+
     &:hover {
       background-color: @toolbutton-bg-color-checked-hover;
       border-color: @toolbutton-border-color-checked-hover;
     }
 
     &:pressed {
-      background-color: darken(@toolbutton-bg-color-checked, @hover-strength);
+      background-color: @toolbutton-bg-color-checked-pressed;
     }
   }
 
   &:disabled {
     color: @text-color-disabled;
+    background-color: @toolbutton-bg-color-disabled;
     
     &:checked {
-      background-color: mix(@ui-color, @button-bg-color, @disabled-opacity);
-      border-color: mix(@ui-color, @button-border-color, @disabled-opacity);
+      background-color: @toolbutton-bg-color-checked-disabled;
+      border-color: @toolbutton-border-color-checked-disabled;
+
+      & when(@gradient-effect = true) {
+        .gradient-effect-vertical();
+      }
     }
   }
 }
 
 // Flat ToolBar Button
 // -----------------------------------------------------------------------------
-// No margin, border or radius, for use in constricted areas.
+// No margin/border/radius, for use in constricted areas like Palette tool bar
 
 .flat-tool-button-style() {
   background-color: none;
@@ -130,10 +194,10 @@
     @height: 20,
     @radius: @button-border-radius
   ) {
-  background-color: @scroll-button-bg-color;
-  border-color: @scroll-button-border-color;
+  background-color: @button-bg-color;
   border-width: 1;
   border-style: solid;
+  border-color: @scroll-button-border-color; // always show border for these
   border-radius: 0;
   padding: 0;
   margin: 0;
@@ -142,57 +206,62 @@
   height: @height;
   max-height: @height;
 
+  & when(@gradient-effect = true) {
+    .gradient-effect-vertical();
+  }
+
   &:hover {
-    background-color: @scroll-button-bg-color-hover;
-    border-color: @scroll-button-border-color;
+    background-color: @button-bg-color-hover;
+    border-color: @scroll-button-border-color-hover;
   }
 
   &:pressed {
     background-color: @button-bg-color-pressed;
+    border-color: @scroll-button-border-color-pressed;
   }
 
   &:disabled {
-    background-color: mix(@scroll-button-bg-color, @ui-color, @disabled-opacity);
-    border-color: @scroll-button-border-color;
+    background-color: @button-bg-color-disabled;
+    border-color: @scroll-button-border-color-disabled;
     color: @text-color-disabled;
   }
 }
 
 .scroll-left-button-style() {
-  image: url('@{img-url}/scroll-left.svg');
+  image: url('@{img-url}/scrollbar/scroll-left.svg');
   margin-top: -1;
   margin-bottom: -1;
   margin-left: -1;
 
   &:hover {
-    image: url('@{img-url}/scroll-left-hover.svg');
+    image: url('@{img-url}/scrollbar/scroll-left-hover.svg');
   }
 }
 
 .scroll-right-button-style() {
-  image: url('@{img-url}/scroll-right.svg');
+  image: url('@{img-url}/scrollbar/scroll-right.svg');
   margin-top: -1;
   margin-bottom: -1;
   margin-right: -1;
 
   &:hover {
-    image: url('@{img-url}/scroll-right-hover.svg');
+    image: url('@{img-url}/scrollbar/scroll-right-hover.svg');
   }
 }
 
 .scroll-up-button-style() {
-  image: url('@{img-url}/scroll-up.svg');
+  image: url('@{img-url}/scrollbar/scroll-up.svg');
 
   &:hover {
-    image: url('@{img-url}/scroll-up-hover.svg');
+    image: url('@{img-url}/scrollbar/scroll-up-hover.svg');
   }
 }
 
 .scroll-down-button-style() {
-  image: url('@{img-url}/scroll-down.svg');
+  image: url('@{img-url}/scrollbar/scroll-down.svg');
 
   &:hover {
-    image: url('@{img-url}/scroll-down-hover.svg');
+    image: url('@{img-url}/scrollbar/scroll-down-hover.svg');
   }
 }
 
@@ -202,7 +271,9 @@
 
 .textfield-style() {
   background-color: @input-bg-color;
-  border: 1 solid @input-border-color;
+  border-style: solid;
+  border-width: 1;
+  border-color: @input-border-color;
   border-radius: @input-border-radius;
   color: @input-text-color;
   selection-background-color: @input-selection-bg-color;
@@ -222,9 +293,10 @@
   }
 
   &:disabled {
-    background-color:mix(@input-bg-color, @ui-color, @disabled-opacity);
-    border-color: mix(@input-border-color, @ui-color, @disabled-opacity);
-    color: @text-color-disabled;
+    background: none; // override gradient image if any
+    color: @input-text-color-disabled;
+    background-color: @input-bg-color-disabled;
+    border-color: @input-border-color-disabled;
   }
 }
 
@@ -234,9 +306,9 @@
 
     &:focus {
       // Double-clicking cells always brings field into focus, and since we
-      // always want maximum contrast hard-code the colors
+      // always want maximum contrast we'll hard-code the colors
       border-radius: 0;
-      border-width: 1; // boost the contrast
+      border-width: 1;
       color: #000;
       border-color: #fff;
       background-color: #fff;
@@ -250,13 +322,13 @@
 // -----------------------------------------------------------------------------
 
 .checkbox-indicator-style() {
-  // For ::indicator
+  // This is for the ::indicator checkboxes
   background-color: @checkbox-bg-color;
   border: 1 solid @checkbox-border-color;
   border-radius: @checkbox-border-radius;
   padding: 1;
-  width: @checkbox-size; // fix for QMenu
-  height: @checkbox-size; // fix for QGroupBox
+  width: 10px; // fixes in QMenu
+  height: 10px; // fixes in QGroupBox
 
   &:hover {
     background-color: @checkbox-bg-color-hover;
@@ -268,20 +340,18 @@
     border-color: @checkbox-border-color-checked;
     image: url('@{img-url}/@{checkbox-img-checked}');
 
+    & when(@gradient-effect = true) {
+      .gradient-effect-vertical();
+    }
+
     &:hover {
       background-color: @checkbox-bg-color-checked-hover;
       border-color: @checkbox-border-color-checked-hover;
     }
 
     &:disabled {
-      background-color:
-        desaturate(
-          mix(@checkbox-bg-color-checked, @ui-color, @disabled-opacity),
-          100%);
-      border-color:
-        desaturate(
-          mix(@checkbox-border-color-checked, @ui-color, @disabled-opacity),
-          100%);
+      background-color: @checkbox-bg-color-checked-disabled;
+      border-color: @checkbox-border-color-checked-disabled;
       image: url('@{img-url}/@{checkbox-img-disabled}');
     }
   }
@@ -298,16 +368,16 @@
 
     &:disabled {
       background-color:
-        mix(@checkbox-bg-color-checked, @ui-color, @disabled-opacity);
+        mix(@checkbox-bg-color-checked, @bg-color, @disabled-amount);
       border-color:
-        mix(@checkbox-border-color-checked, @ui-color, @disabled-opacity);
+        mix(@checkbox-border-color-checked, @bg-color, @disabled-amount);
       image: url('@{img-url}/@{checkbox-img-partially-disabled}');
     }
   }
 
   &:disabled {
-    background-color: mix(@checkbox-bg-color, @ui-color, @disabled-opacity);
-    border-color: mix(@checkbox-border-color, @ui-color, @disabled-opacity);
+    background-color: mix(@checkbox-bg-color, @bg-color, @disabled-amount);
+    border-color: mix(@checkbox-border-color, @bg-color, @disabled-amount);
   }
 }
 
@@ -325,24 +395,24 @@
   image-position: center center;
 
   &:unchecked {
-    image: url('@{img-url}/radiobutton_unchecked.svg');
+    image: url('@{img-url}/radiobutton/radiobutton_unchecked.svg');
 
     &:hover {
-      image: url('@{img-url}/radiobutton_unchecked_hover.svg');
+      image: url('@{img-url}/radiobutton/radiobutton_unchecked_hover.svg');
     }
   }
 
   &:checked {
-    image: url('@{img-url}/radiobutton_checked.svg');
+    image: url('@{img-url}/radiobutton/radiobutton_checked.svg');
 
     &:disabled {
       background-color: transparent;
-      image: url('@{img-url}/radiobutton_checked_disabled.svg');
+      image: url('@{img-url}/radiobutton/radiobutton_checked_disabled.svg');
     }
   }
 
   &:disabled {
-    image: url('@{img-url}/radiobutton_unchecked_disabled.svg');
+    image: url('@{img-url}/radiobutton/radiobutton_unchecked_disabled.svg');
   }
 }
 
@@ -350,9 +420,9 @@
 // Treeviews
 // -----------------------------------------------------------------------------
 
-.treeview-item-style() {
+.treeview-item-style(@show-alt-row: false) {
   background-color: @tree-bg-color;
-  alternate-background-color: @tree-bg-color-alt-row;
+  alternate-background-color: if(@show-alt-row, @tree-bg-color-alt-row, transparent);
   border: 0;
   margin: 0;
   outline: 0;
@@ -363,20 +433,20 @@
       color: @hl-text-color;
 
       &:hover {
-        background-color: lighten(@hl-color, @hover-strength);
+        background-color: lighten(@hl-color, 8% * @hover-adjust-amount);
         color: @hl-text-color;
       }
     }
 
     &:hover {
-      background-color: @secondary-hl-color;
+      background-color: @tree-item-bg-color-hover;
     }
   }
 }
 
 .treeview-branch-style() {
   // For ::branch
-  @blank_img: '@{img-url}/transparent_16x16.png';
+  @blank_img: '@{img-url}/misc/transparent_16x16.png';
 
   background-color: transparent; // allow item bg color through branch area
 
@@ -394,28 +464,28 @@
 
   &:has-children {
     &:closed {
-      background: url('@{img-url}/treebranch-closed.svg') no-repeat;
+      background: url('@{img-url}/tree/treebranch-closed.svg') no-repeat;
       background-position: center center;
       border-image: none;
       image: none;
     }
 
     &:open {
-      background: url('@{img-url}/treebranch-open.svg') no-repeat;
+      background: url('@{img-url}/tree/treebranch-open.svg') no-repeat;
       background-position: center center;
       image: none;
     }
 
     &:has-siblings {
       &:closed {
-        background: url('@{img-url}/treebranch-closed.svg') no-repeat;
+        background: url('@{img-url}/tree/treebranch-closed.svg') no-repeat;
         background-position: center center;
         border-image: none;
         image: none;
       }
       
       &:open {
-        background: url('@{img-url}/treebranch-open.svg') no-repeat;
+        background: url('@{img-url}/tree/treebranch-open.svg') no-repeat;
         background-position: center center;
         border-image: none;
         image: none;
@@ -428,12 +498,12 @@
 // Frame Borders (GroupBox Style, etc.)
 // -----------------------------------------------------------------------------
 
-.main-frame-style(@border-color: @groupbox-border-color) {
+.main-frame-style(@border-color: @border-color) {
   background-color: transparent;
   border-width: 1;
   border-style: solid;
   border-radius: @groupbox-border-radius;
-  border-color: @border-color;
+  border-color: @groupbox-border-color;
 }
 
 // -----------------------------------------------------------------------------
@@ -456,10 +526,10 @@
   margin-left: 1;
 
   &:unchecked {
-    image: url('@{img-url}/lock.svg');
+    image: url('@{img-url}/lock/lock.svg');
 
     &:hover {
-      image: url('@{img-url}/lock_over.svg');
+      image: url('@{img-url}/lock/lock_over.svg');
     }
 
     &:pressed {
@@ -471,7 +541,11 @@
   &:checked {
     background-color: @lockbutton-bg-color-checked;
     border-color: @lockbutton-border-color-checked;
-    image: url('@{img-url}/lock_on.svg');
+    image: url('@{img-url}/lock/lock_on.svg');
+
+    & when (@gradient-effect = true) {
+      .gradient-effect-vertical();
+    }
     
     &:hover {
       background-color: @lockbutton-bg-color-checked-hover;
@@ -479,13 +553,13 @@
 
       &:pressed {
         background-color: @lockbutton-bg-color-checked-pressed;
-        border-color: @lockbutton-border-color-checked-pressed;
+        border-color: @lockbutton-border-color-checked;
       }
     }
 
     &:pressed {
       background-color: @lockbutton-bg-color-checked-pressed;
-      border-color: @lockbutton-border-color-checked-pressed;
+      border-color: @lockbutton-border-color-checked;
     }
   }
 }

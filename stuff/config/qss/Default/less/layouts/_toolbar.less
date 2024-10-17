@@ -14,19 +14,11 @@
   }
 
   & QToolButton#qt_toolbar_ext_button {
-    qproperty-icon: url('@{img-url}/toolbar_extension_vertical.png');
-    padding-bottom: 1;
-
-    &:hover {
-      background-color: @button-bg-color-hover;
-    }
-
-    &:pressed {
-      background-color: @toolbutton-bg-color-pressed;
-    }
+    background-image: url('@{img-url}/misc/toolbar_extension_vertical.png');
   }
 }
 
+// The big arrow expand button to shrink/expand the toolbar
 #expandButton {
   &:checked {
     background-color: transparent;
@@ -51,11 +43,11 @@
 #XSheetToolbar {
   padding: 0;
   margin: 0;
-  border-bottom: 1 solid @dark-border-color;
+  border-bottom: 1 solid @border-color;
 
   & QToolButton#qt_toolbar_ext_button {
     margin: 0;
-    margin-top: 3;
+    padding-top: 7; // increase height a bit
   }
 
   & QToolButton {
@@ -94,15 +86,16 @@
   }
 
   & QToolButton#qt_toolbar_ext_button {
-    margin-top: 1;
+    margin: 0;
+    padding-top: 4; // increase height a bit
   }
 
   & TPanelTitleBar {
-    border-right: @title-border-width solid @title-border-color;
+    border-right: 1 solid @border-color;
     border-bottom: 0;
     border-radius: 0;
-    border-top-left-radius: @title-border-radius;
-    border-bottom-left-radius: @title-border-radius;
+    border-top-left-radius: @titlebar-border-radius;
+    border-bottom-left-radius: @titlebar-border-radius;
     max-width: 18;
   }
 }

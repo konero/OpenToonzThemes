@@ -4,7 +4,7 @@
 
 PaletteViewer {
   & DvScrollWidget {
-    & QPushButton {
+    & QPushButton { // scroll buttons
       margin-bottom: 0;
       max-width: 15;
       min-width: 15;
@@ -41,7 +41,13 @@ PaletteViewer {
   }
 }
 
-// #StudioPalette {}
+#StudioPalette {
+  & QTreeView {
+    // Override QTreeView and use bg-color instead
+    background-color: @bg-color;
+    alternate-background-color: @bg-color;
+  }
+}
 
 #PageViewer {
   qproperty-TextColor: @text-color;
@@ -64,13 +70,13 @@ PaletteViewer {
 
     &:hover {
       background-color: @lockbutton-bg-color-checked-hover;
-      border-color: @lockbutton-border-color-checked-hover;
+      border-color: @lockbutton-bg-color-checked-hover;
     }
   }
 }
 
 #PltPageViewerScrollArea {
-  border-bottom: 1 solid @dark-border-color;
+  border-bottom: 1 solid @border-color;
 }
 
 /* -----------------------------------------------------------------------------

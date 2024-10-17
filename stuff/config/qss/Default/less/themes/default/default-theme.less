@@ -1,354 +1,376 @@
 // out: "../../../Default.qss"
 
+//! The above line is for EasyLESS (VSCode extension) compile output location
+
+// -----------------------------------------------------------------------------
+// DEFAULT THEME
+// All other themes derive from this, since LESS prioritizes the most recent
+// variable definitions we can override only ones nessesary.
+// -----------------------------------------------------------------------------
+
+// Includes
 @import '../../_main.less';
-@import '../../base/_theme-engine.less';
 
-// -----------------------------------------------------------------------------
-// *** DEFAULT THEME
-// All other themes derive from this one, so when developing all terminology
-// should take this into consideration.
-//
-// How Themeing Works:
-// We're leveraging Less's variable loading for efficient generation. Since Less
-// prioritizes the most recent variable definitions, we can override only ones
-// nessesary to create a new theme.
-// -----------------------------------------------------------------------------
-
-// Relative to where the Default.qss file output is
+// Image path relative to where this *.qss is output
 @img-url: 'imgs/white';
 
-// Adjust gamma
-@shade-amount: 2.5; // difference between colors compared to @ui-color
-@bg-contrast-light: 1.0; // adjust light shades contrast (@ui-light#)
-@border-contrast-light: 1.0;
-@bg-contrast-dark: 1.0; // adjust dark shades contrast (@ui-dark#)
-@border-contrast-dark: 1.0;
+// SETTINGS --------------------------------------------------------------------
 
-@hover-strength: 8%;
-@disabled-opacity: 40%;
-@invert-separator-colors: false;
+@ui-contrast: 1.0; // multiplier
+@border-contrast: 1.0; // multiplier
 
-// Some colors can be inverted depending if the theme is light or dark
-@dark-theme: true;
+@hover-adjust-amount: 1.0; // multiplier
+@pressed-adjust-amount: 1.0; // multiplier
+@disabled-amount: 40%; // percentage range: 0-100%
 
-// Interface colors
-@ui-color: #4E4E4E;
+@gradient-effect: false; // bool: show gradients on buttons
+@titlebar-gradient-effect: false; // bool: show gradients on titlebars
+@bold-titlebar-text: true; // bool
+@bold-label-text: true; // bool
+@bold-fxlabel-text: false; // bool
 
-@text-color: #e9e9e9;
-@dull-text-color: rgba(@text-color, 0.6);
-@text-color-disabled: fade(@text-color, @disabled-opacity);
+// COLORS ----------------------------------------------------------------------
 
-@hl-color: hsl(216, 56%, 57%);
-@hl-text-color: #fff;
-@secondary-hl-color: rgba(255, 255, 255, 0.15);
-@secondary-hl-text-color: #fff;
+@bg-color: #484848;
 
-@normal-label-color: #9fdaff;
-@error-label-color: red;
-@lock-color: #c94949;
-@preview-color: hsl(50, 45%, 45%);
-@panel-separator-color: @ui-dark6;
+// Border
+@border-color: darken(@bg-color, 16% * @border-contrast);
+@dock-color: darken(@bg-color, 22%);
+@dock-placeholder-color: #1aff00;
+
+// Text
+@text-color: #e8e8e8;
+@text-color-active: rgb(239, 239, 239);
+@text-color-inactive: fade(@text-color, 60%);
+@text-color-disabled: fade(@text-color, @disabled-amount);
+
+// Highlight
+@hl-color: #4f7bc7;
+@hl-text-color: white;
+@lock-color: #d44a4a;
+@preview-color: #b9b000;
+
+// Label
+@normal-label-color: #7fdbfc;
+@success-label-color: #00ff00;
+@error-label-color: #ff7b7b;
+@fx-settings-label-color: #a0e680;
+
+// Tooltip
+@tooltip-bg-color: rgb(24, 24, 24);
+@tooltip-border-color: rgb(130, 130, 130);
+@tooltip-text-color: rgb(210, 210, 210);
+@tooltip-padding: 2px;
 
 // -----------------------------------------------------------------------------
 // Tabs
 // -----------------------------------------------------------------------------
-
-// Container
-@tabbar-bg-color: @ui-dark2;
+@tabbar-bg-color: darken(@bg-color, 5% * @ui-contrast);
 
 // Tab
 @tab-bg-color: @tabbar-bg-color;
-@tab-text-color: @dull-text-color;
-@tab-flat-style-border-color: @dark-border-color;
-@tab-border-radius: 2;
+@tab-text-color: @text-color-inactive;
+@tab-border-color: @border-color;
 
-// Tab Hover
-@tab-bg-color-hover: lighten(@tab-bg-color, @hover-strength);
-@tab-text-color-hover: if(@dark-theme, white, black);
+// Hover
+@tab-bg-color-hover: lighten(@tab-bg-color, 8% * @hover-adjust-amount);
+@tab-text-color-hover: @text-color-active;
 
-// Tab Selected
-@tab-bg-color-selected: @ui-color;
-@tab-text-color-selected: if(@dark-theme, white, black);
+// Selected
+@tab-bg-color-selected: @bg-color;
+@tab-text-color-selected: @text-color-active;
 
 // -----------------------------------------------------------------------------
-// Top Menubar & Workspace Area
+// Top Menubar / Rooms
 // -----------------------------------------------------------------------------
+@topbar-bg-color: @bg-color;
 
-// Topbar
-@topbar-dock-spacer-size: 1; // increases the gap between #TopBar and panels
-@topbar-bg-color: @ui-color;
+@menubar-item-bg-color-selected: @hl-color;
+@menubar-item-bg-color-hover: lighten(@topbar-bg-color, 8% * @hover-adjust-amount);
 
-// Workspace Tabs
+// Rooms
 @rooms-tab-bg-color: @tab-bg-color;
-@rooms-tab-border-color: @dark-border-color;
-@rooms-tab-text-color: @text-color;
-@rooms-tab-border-radius: 0;
+@rooms-tab-border-color: @tab-border-color;
+@rooms-tab-text-color: @tab-text-color;
 
-// Workspace Tabs Hover
-@rooms-tab-bg-color-hover: lighten(@rooms-tab-bg-color, @hover-strength);
-@rooms-tab-text-color-hover: if(@dark-theme, white, black);
+// Hover
+@rooms-tab-bg-color-hover: lighten(@rooms-tab-bg-color, 8% * @hover-adjust-amount);
+@rooms-tab-text-color-hover: @tab-text-color-hover;
 
-// Workspace Tabs Selected
+// Selected
 @rooms-tab-bg-color-selected: @hl-color;
 @rooms-tab-text-color-selected: @hl-text-color;
-@rooms-tab-border-color-selected: @rooms-tab-border-color;
+@rooms-tab-bg-color-selected-hover: lighten(@rooms-tab-bg-color-selected, 8% * @hover-adjust-amount);
 
 // -----------------------------------------------------------------------------
-// Menu
+// Context Menu
 // -----------------------------------------------------------------------------
+@menu-bg-color: @bg-color;
+@menu-border-color: @border-color;
+@menu-separator-color: @menu-border-color;
 
-// Menu Box
-@menu-bg-color: @ui-color;
-@menu-border-color: @dark-border-color;
-@menu-separator-color: @light-border-color;
+// Item
 @menu-text-color: @text-color;
+@menu-checkbox-border-color: @checkbox-border-color;
 
-// Item Hover
+// Hover
 @menu-item-bg-color-selected: @hl-color;
 @menu-item-text-color-selected: @hl-text-color;
+@menu-checkbox-border-color-hover: @checkbox-bg-color;
 
-// Checkable Item
-@menu-item-text-color-checked: @normal-label-color;
-@menu-checkbox-border-color: @checkbox-border-color;;
-
-// Checkable Item Background
+// Checked
 @menu-item-bg-color-checked: @menu-bg-color;
-
-// Checkable Item Hover
+@menu-item-text-color-checked: lime;
+@menu-checkbox-border-color-checked: @checkbox-border-color-checked;
 @menu-checkbox-text-color-selected: @text-color;
-@menu-checkbox-border-color-selected: @checkbox-border-color-hover;
 
-// Checkable Item Icon
+// Checked Hover
+@menu-checkbox-border-color-checked-selected: @checkbox-border-color-checked;
+
+// Checked Icon
 @menu-icon-checked-bg-color: @hl-color;
 @menu-icon-checked-border-color: @menu-icon-checked-bg-color;
 
 // -----------------------------------------------------------------------------
-// Scrollbars
+// GroupBox
 // -----------------------------------------------------------------------------
-
-// Container
-@sb-bg-color: @ui-dark3;
-
-// Handle
-@sb-handle-border-size: 0;
-@sb-handle-radius: 4;
-@sb-handle-margin: 3;
-
-@sb-handle-bg-color: @ui-light3;
-@sb-handle-border-color: @sb-handle-bg-color;
+@groupbox-border-color: @border-color;
+@groupbox-border-radius: 2px;
 
 // -----------------------------------------------------------------------------
 // Button
 // -----------------------------------------------------------------------------
+@button-h-padding: 12px;
+@button-v-padding: 2px;
 
-// Base
-@button-bg-color: @ui-light4;
-@button-border-color: @button-bg-color;
 @button-text-color: @text-color;
-@button-border-width: 1;
-@button-border-radius: 2;
+@button-bg-color: lighten(@bg-color, 12%);
+
+@button-border-color: @button-bg-color;
+@button-border-radius: 2px;
 
 // Hover
-@button-bg-color-hover: lighten(@button-bg-color, @hover-strength);
+@button-text-color-hover: @button-text-color;
+@button-bg-color-hover: lighten(@button-bg-color, 8% * @hover-adjust-amount);
 @button-border-color-hover: @button-bg-color-hover;
-@button-text-color-hover: if(@dark-theme, white, black);
 
 // Pressed
-@button-bg-color-pressed: @ui-dark4;
-@button-border-color-pressed: @button-border-color;
 @button-text-color-pressed: @button-text-color;
+@button-bg-color-pressed: darken(@bg-color, 8% * @pressed-adjust-amount);
+@button-border-color-pressed: @button-border-color;
 
 // Checked
-@button-bg-color-checked: @ui-dark5;
-@button-border-color-checked: @button-border-color;
 @button-text-color-checked: @normal-label-color;
+@button-bg-color-checked: darken(@bg-color, 8% * @pressed-adjust-amount);
+@button-border-color-checked: @button-border-color;
+
+// Checked Hover
+@button-bg-color-checked-hover: lighten(@button-bg-color-checked, 8% * @hover-adjust-amount);
 
 // Focus
+@button-text-color-focus: @hl-text-color;
 @button-bg-color-focus: @hl-color;
 @button-border-color-focus: @button-bg-color-focus;
-@button-text-color-focus: @hl-text-color;
-@button-bg-color-focus-hover: lighten(@button-bg-color-focus, @hover-strength);
+
+// Focus Hover
+@button-bg-color-focus-hover: lighten(@button-bg-color-focus, 8% * @hover-adjust-amount);
 @button-border-color-focus-hover: @button-bg-color-focus-hover;
+
+// Disabled
+@button-bg-color-disabled: mix(@bg-color, @button-bg-color, @disabled-amount);
+@button-border-color-disabled: fade(@button-bg-color-disabled, @disabled-amount);
+
+// Scroll Buttons
+@scroll-button-border-color: @border-color;
+@scroll-button-border-color-hover: @scroll-button-border-color;
+@scroll-button-border-color-pressed: @scroll-button-border-color;
+@scroll-button-border-color-disabled: @scroll-button-border-color;
+
+// Dialog Popup
+@popup-dialog-button-frame-bg-color: @tabbar-bg-color;
+
+// -----------------------------------------------------------------------------
+// ComboBox
+// -----------------------------------------------------------------------------
+@combobox-border-color-focus: @hl-color;
 
 // -----------------------------------------------------------------------------
 // Tool Buttons
 // -----------------------------------------------------------------------------
+@toolbar-separator-color: @border-color;
 
-@toolbar-separator-color: if(@invert-separator-colors, @light-border-color, @dark-border-color);
-
-// Base
+@toolbutton-text-color: @button-text-color;
 @toolbutton-bg-color: transparent;
 @toolbutton-border-color: @toolbutton-bg-color;
-@toolbutton-text-color: @button-text-color;
-@toolbutton-border-width: @button-border-width;
-@toolbutton-border-radius: @button-border-radius;
 
 // Hover
-@toolbutton-bg-color-hover: @button-bg-color-hover;
-@toolbutton-border-color-hover: @toolbutton-bg-color-hover;
 @toolbutton-text-color-hover: @button-text-color-hover;
+@toolbutton-bg-color-hover: @button-bg-color-hover;
+@toolbutton-border-color-hover: @button-border-color-hover;
 
 // Pressed
+@toolbutton-text-color-pressed: @hl-text-color;
 @toolbutton-bg-color-pressed: @button-bg-color-pressed;
 @toolbutton-border-color-pressed: @button-border-color-pressed;
-@toolbutton-text-color-pressed: @button-text-color-pressed;
 
 // Checked
+@toolbutton-text-color-checked: @hl-text-color;
 @toolbutton-bg-color-checked: @hl-color;
 @toolbutton-border-color-checked: @toolbutton-bg-color-checked;
-@toolbutton-text-color-checked: @hl-text-color;
 
 // Checked Hover
-@toolbutton-bg-color-checked-hover: lighten(@toolbutton-bg-color-checked, @hover-strength);
+@toolbutton-bg-color-checked-hover: lighten(@toolbutton-bg-color-checked, 8% * @hover-adjust-amount);
 @toolbutton-border-color-checked-hover: @toolbutton-bg-color-checked-hover;
+
+// Checked Pressed
+@toolbutton-bg-color-checked-pressed: darken(@toolbutton-bg-color-checked, 8% * @pressed-adjust-amount);
+
+// Disabled
+@toolbutton-bg-color-disabled: @toolbutton-bg-color;
+@toolbutton-bg-color-checked-disabled: mix(@toolbutton-bg-color-checked, @bg-color, @disabled-amount);
+@toolbutton-border-color-checked-disabled: @toolbutton-bg-color-checked-disabled;
 
 // -----------------------------------------------------------------------------
 // Lock Button
+// Inherits @toolbutton for base colors, we only override the checked state
 // -----------------------------------------------------------------------------
-
-// Note: Inherits @toolbutton, no need to configure the base again!
-
-// Checked
 @lockbutton-bg-color-checked: @lock-color;
 @lockbutton-border-color-checked: @lockbutton-bg-color-checked;
 
-// Checked Hover
-@lockbutton-bg-color-checked-hover: lighten(@lockbutton-bg-color-checked, @hover-strength);
+// Hover
+@lockbutton-bg-color-checked-hover: lighten(@lockbutton-bg-color-checked, 8% * @hover-adjust-amount);
 @lockbutton-border-color-checked-hover: @lockbutton-bg-color-checked-hover;
 
-// Checked Hover Pressed
-@lockbutton-bg-color-checked-pressed: darken(@lockbutton-bg-color-checked, @hover-strength);
-@lockbutton-border-color-checked-pressed: @lockbutton-bg-color-checked-pressed;
+// Hover Pressed
+@lockbutton-bg-color-checked-pressed: darken(@lockbutton-bg-color-checked, 8% * @hover-adjust-amount);
 
 // -----------------------------------------------------------------------------
-// Scroll Buttons (Tab, Toolbar, etc.)
+// Scrollbars [sb]
 // -----------------------------------------------------------------------------
+@sb-bg-color: darken(@bg-color, 10% * @ui-contrast);
 
-@scroll-button-bg-color: @ui-light5;
-@scroll-button-bg-color-hover: lighten(@scroll-button-bg-color, @hover-strength);
-@scroll-button-border-color: @dark-border-color;
+// Handle
+@sb-handle-radius: 5px;
+@sb-handle-margin: 2px;
+
+@sb-handle-bg-color: @button-bg-color;
+@sb-handle-bg-color-hover: lighten(@sb-handle-bg-color, 8% * @hover-adjust-amount);
+@sb-handle-bg-color-pressed: lighten(@sb-handle-bg-color-hover, 8% * @hover-adjust-amount);
+@sb-handle-border-color: @sb-handle-bg-color;
+@sb-handle-border-color-hover: @sb-handle-bg-color-hover;
+@sb-handle-border-color-pressed: @sb-handle-bg-color-pressed;
 
 // -----------------------------------------------------------------------------
 // Textfield
 // -----------------------------------------------------------------------------
-
-// Base
-@input-bg-color: @ui-dark5;
-@input-border-color: @input-bg-color;
-@input-border-radius: 2;
 @input-text-color: @text-color;
+@input-bg-color: darken(@bg-color, 18%);
+@input-border-color: darken(@input-bg-color, 8%);
+@input-border-radius: 2px;
 
 // Hover
+@input-text-color-hover: @input-text-color;
 @input-bg-color-hover: @input-bg-color;
 @input-border-color-hover: @input-border-color;
-@input-text-color-hover: @input-text-color;
 
 // Focus
+@input-text-color-focus: white;
 @input-bg-color-focus: @input-bg-color;
 @input-border-color-focus: @hl-color;
-@input-text-color-focus: #fff;
+
+// Disabled
+@input-text-color-disabled: mix(@input-text-color, @input-bg-color-disabled, @disabled-amount);
+@input-bg-color-disabled: mix(@input-bg-color, @bg-color, @disabled-amount);
+@input-border-color-disabled: fade(@input-border-color, @disabled-amount);
 
 // Text Selection
-@input-selection-text-color: @hl-text-color;
+@input-selection-text-color: @input-text-color-focus;
 @input-selection-bg-color: fade(@hl-color, 80%);
 
 // -----------------------------------------------------------------------------
 // CheckBox
 // -----------------------------------------------------------------------------
+@checkbox-text-color-hover: white;
+@checkbox-text-bg-color-hover: lighten(@bg-color, 8% * @hover-adjust-amount);
 
-// Base
-@checkbox-size: 9;
+// Checkbox
 @checkbox-bg-color: @input-bg-color;
-@checkbox-border-color: @checkbox-bg-color;
-@checkbox-border-radius: 2;
+@checkbox-border-color: @border-color;
+@checkbox-border-radius: 2px;
 
 // Hover
-@checkbox-bg-color-hover: @checkbox-bg-color;
-@checkbox-border-color-hover: if(@dark-theme, white, black);
-@checkbox-text-color-hover: white;
+@checkbox-bg-color-hover: lighten(@checkbox-bg-color, 8% * @hover-adjust-amount);
+@checkbox-border-color-hover: @checkbox-border-color;
 
 // Checked
-@checkbox-img-checked: 'checkmark.svg';
-@checkbox-img-disabled: 'checkmark_disabled.svg';
-@checkbox-img-partially: 'checkpartially.svg';
-@checkbox-img-partially-disabled: 'checkpartially_disabled.svg';
+@checkbox-img-checked: 'checkmark/checkmark.svg';
+@checkbox-img-disabled: 'checkmark/checkmark_disabled.svg';
+@checkbox-img-partially: 'checkmark/checkpartially.svg';
+@checkbox-img-partially-disabled: 'checkmark/checkpartially_disabled.svg';
+
 @checkbox-bg-color-checked: @hl-color;
 @checkbox-border-color-checked: @checkbox-bg-color-checked;
 
 // Checked Hover
-@checkbox-bg-color-checked-hover: lighten(@checkbox-bg-color-checked, @hover-strength);
-@checkbox-border-color-checked-hover: @checkbox-border-color-hover;
+@checkbox-bg-color-checked-hover: lighten(@checkbox-bg-color-checked, 8% * @hover-adjust-amount);
+@checkbox-border-color-checked-hover: @checkbox-bg-color-checked-hover;
+
+// Disabled
+@checkbox-bg-color-checked-disabled: mix(@bg-color, @checkbox-bg-color-checked, @disabled-amount);
+@checkbox-border-color-checked-disabled: @checkbox-bg-color-checked-disabled;
 
 // -----------------------------------------------------------------------------
-// GroupBox
+// Sliders
 // -----------------------------------------------------------------------------
-
-@groupbox-border-color: if(@invert-separator-colors, @light-border-color, @dark-border-color);
-@groupbox-border-radius: 2;
-
-// -----------------------------------------------------------------------------
-// Slider
-// -----------------------------------------------------------------------------
-
 // Single Slider: Groove
-@slider-groove-img: url('@{img-url}/slider-groove.svg');
-@slider-v-margin: 8;
-@slider-groove-radius: 2;
-@slider-groove-color: @ui-dark6;
+@slider-v-margin: 8px;
+@slider-groove-img: 'slider/slider-groove.svg'; // viewer fps slider
+@slider-groove-color: darken(@bg-color, 20%);
 @slider-groove-value-color: @slider-groove-color;
 @slider-groove-border-color: @slider-groove-color;
 
 // Handles
-@slider-handle-margin: -1;
-@slider-handle-size: 10;
+@slider-handle-margin: -1px;
+@slider-handle-size: 10px;
 
-// Horizontal Handle Only
-@slider-handle-img: 'slider-handle-rectangle.svg';
-@slider-handle-img-disabled: 'slider-handle-rectangle_disabled.svg';
+// Horizontal Handle
+@slider-handle-img: 'slider/slider-handle-rectangle.svg';
+@slider-handle-img-disabled: 'slider/slider-handle-rectangle_disabled.svg';
 
-// Vertical Handle Only
-@slider-v-handle-img: 'slider-handle-v-rectangle.svg';
-@slider-v-handle-img-disabled: 'slider-handle-v-rectangle_disabled.svg';
+// Vertical Handle
+@slider-v-handle-img: 'slider/slider-handle-v-rectangle.svg';
+@slider-v-handle-img-disabled: 'slider/slider-handle-v-rectangle_disabled.svg';
 
-// Only for #ViewerFpsSlider
-@slider-handle-bg-color: @ui-light9;
-
-// Double Slider: #DoublePairField, #IntPairField
-@slider-left-handle: @slider-handle-img;
-@slider-right-handle: @slider-handle-img;
-@slider-left-handle-disabled: @slider-handle-img-disabled;
-@slider-right-handle-disabled: @slider-handle-img-disabled;
+// Only for #ViewerFpsSlider (should mimic the slider-handle images)
+@slider-handle-bg-color: lighten(@bg-color, 35%);
+@slider-handle-border-color: @slider-handle-bg-color;
 
 // -----------------------------------------------------------------------------
 // Titlebars
 // -----------------------------------------------------------------------------
 
-@title-bg-color: @ui-dark2;
-@title-bg-color-hover: @title-bg-color;
-@title-text-color: @dull-text-color;
-@title-text-color-active: white;
-@title-border-width: 1;
-@title-border-color: @dark-border-color;
-@title-border-radius: 0;
+@titlebar-border-radius: 0px;
+@titlebar-bg-color: @tabbar-bg-color;
+@titlebar-bg-color-hover: @titlebar-bg-color;
+@titlebar-text-color: @text-color-inactive;
+@titlebar-text-color-active: @text-color-active;
 
 // Icon Colors
-@title-button-rollover-color: @toolbutton-bg-color-hover;
-@title-button-pressed-color: @hl-color;
-@title-button-freeze-color: @lock-color;
-@title-button-preview-color: @preview-color;
-@title-close-over-color: @lock-color;
+@titlebar-button-rollover-color: lighten(@titlebar-bg-color, 18% * @hover-adjust-amount);
+@titlebar-button-pressed-color: @hl-color;
+@titlebar-button-freeze-color: @lock-color;
+@titlebar-button-preview-color: @preview-color;
 
 // -----------------------------------------------------------------------------
 // Palette Window
 // -----------------------------------------------------------------------------
-
 // All Views (except list view)
 @palette-SelectedBorderColor: rgb(255, 255, 255);
 @palette-NumpadShortcutBgColor: rgba(0, 0, 0, 0.3);
 @palette-NumpadShortcutBorderColor: rgb(141, 141, 141);
 
 // List View
-@palette-SeparatorColor: @dark-border-color;
+@palette-SeparatorColor: @border-color;
 @palette-SelectedCellColor: @hl-color;
 @palette-CurrentCellColor: rgba(@hl-color, 0.5);
 @palette-ListNumpadShortcutBorderColor: rgb(175, 175, 175);
@@ -361,191 +383,196 @@
 @palette-SelectedChipBox2Color: rgb(199, 202, 50);
 
 // -----------------------------------------------------------------------------
-// File Browser / Trees
+// File Browser / Treeviews / Lists
 // -----------------------------------------------------------------------------
-
-// Filebrowser Window Color
-@filebrowser-bg-color: @ui-color;
+@browser-window-bg-color: @bg-color;
+@browser-right-pane-bg-color: @bg-color;
 
 // Treeviews
-@tree-bg-color: @ui-dark2;
-@tree-bg-color-alt-row: rgba(255, 255, 255, 0.04);
+@tree-bg-color: darken(@bg-color, 5% * @ui-contrast);
+@tree-bg-color-alt-row: rgba(0, 0, 0, 0.15);
+
+@tree-item-bg-color-hover: lighten(@bg-color, 8% * @hover-adjust-amount);
+
+// Lists
+@list-bg-color: @tree-bg-color;
 
 // All Panes
+@browser-text-color: @text-color;
 @browser-folder-text-color: @normal-label-color;
 @browser-folder-text-color-selected: @hl-text-color;
 @browser-selected-item-bg-color: @hl-color;
 
-// Left Pane Only
-@browser-listview-bg-color: @tree-bg-color;
-@browser-listview-bg-color-alt: @browser-listview-bg-color;
-
-// Right Pane Sort Column Headers
+// Right Pane Column Bar
 @browser-itemview-col-color: @tree-bg-color;
 @browser-itemview-col-color-sorted: @browser-itemview-col-color;
 @browser-itemview-col-text-color: @text-color;
-@browser-itemview-col-border-color: @dark-border-color;
+@browser-itemview-col-border-color: @border-color;
 @browser-itemview-col-relief-color: @browser-itemview-col-color;
 
 // -----------------------------------------------------------------------------
 // Flip Slider/Marker
 // -----------------------------------------------------------------------------
-
-// Config
-@flip-saturation: 35%;
-@flip-lightness: 50%;
-
-// Handle
-@flipmarker-img: 'flipmarker.svg';
-@flipslider-img: 'flipslider.svg';
-
-// Flip Slider Bar States
-@flipslider-base-color: @ui-dark2;
-@flipslider-notstarted-color: hsl(0, @flip-saturation, @flip-lightness); // red
-@flipslider-started-color: hsl(69, @flip-saturation + 35%, @flip-lightness + 10%); // yellow
-@flipslider-finished-color: hsl(120, @flip-saturation, @flip-lightness); // green
+@flipmarker-img: 'flipslider/flipmarker.svg';
+@flipslider-img: 'flipslider/flipslider.svg';
+@flipslider-base-color: darken(@bg-color, 10% * @ui-contrast);
+@flipslider-notstarted-color: hsl(0, 32%, 42%);
+@flipslider-started-color: hsl(118, 38%, 45%);
+@flipslider-finished-color: @flipslider-base-color;
 
 // -----------------------------------------------------------------------------
 // Viewer Window
 // -----------------------------------------------------------------------------
-
-// Ruler
-@viewer-ruler-bg-color: @ui-color;
+@viewer-ruler-bg-color: @bg-color;
 @viewer-ruler-scale-color: rgba(@text-color, 0.7);
 @viewer-ruler-tool-options-text-color: #000;
-@viewer-ruler-border-color: @dark-border-color;
-@viewer-ruler-handle-color: lighten(saturate(@hl-color, 35), 15);
-@viewer-ruler-handle-drag-color: yellow;
+@viewer-ruler-border-color: @border-color;
+@viewer-ruler-handle-color: rgb(255, 132, 255);
+@viewer-ruler-handle-drag-color: lime;
 
 // -----------------------------------------------------------------------------
 // Progress Bar
 // -----------------------------------------------------------------------------
-
-@progressbar-bg-color: @ui-dark4;
-@progressbar-border-color: @dark-border-color;
-@progressbar-chunk-bg-color: rgb(20, 160, 55);
-@progressbar-chunk-border-color: @dark-border-color;
+@progressbar-bg-color: @flipslider-base-color;
+@progressbar-border-color: @border-color;
+@progressbar-chunk-bg-color: rgb(57, 151, 57);
+@progressbar-chunk-border-color: @border-color;
 
 // -----------------------------------------------------------------------------
-//
+// Custom Panels
+// -----------------------------------------------------------------------------
+@custompanel-scroller-bg-color: darken(@bg-color, 16% * @ui-contrast);
+@custompanel-scroller-border-color: lighten(@custompanel-scroller-bg-color, 30% * @border-contrast);
+
+// [xsh] =======================================================================
 //       :::    :::  ::::::::  :::    ::: :::::::::: :::::::::: ::::::::::: 
 //      :+:    :+: :+:    :+: :+:    :+: :+:        :+:            :+:      
 //      +:+  +:+  +:+        +:+    +:+ +:+        +:+            +:+       
 //      +#++:+   +#++:++#++ +#++:++#++ +#++:++#   +#++:++#       +#+        
 //    +#+  +#+         +#+ +#+    +#+ +#+        +#+            +#+         
 //  #+#    #+# #+#    #+# #+#    #+# #+#        #+#            #+#          
-// ###    ###  ########  ###    ### ########## ##########     ###          
-//
+// ###    ###  ########  ###    ### ########## ##########     ###  
 // -----------------------------------------------------------------------------
 
-// Xsheet Settings
+// SETTINGS --------------------------------------------------------------------
+
+@xsh-color: @bg-color;
+
+@xsh-contrast: 1.0; // multiplier
+@xsh-border-contrast: 1.0; // multiplier
+@xsh-mono-icons: false; // bool
+
+// Cell
+@xsh-cell-lighten-amount: 0%;
+@xsh-cell-sat-amount: 0%;
+
+@xsh-border-darken-amount: 12%;
+@xsh-border-sat-amount: 0%;
+
+@xsh-hl-mix-color: hsl(hue(@hl-color), 50%, 50%);
+@xsh-hl-mix-amount: 74%;
+@xsh-hl-lighten-amount: 10%;
+
 // -----------------------------------------------------------------------------
-
-@xsh-cell-lightness: -4%;
-@xsh-cell-saturation: -8%;
-
-@xsh-hl-lightness: 8%;
-@xsh-hl-saturation: -4%;
-
-@xsh-handle-lightness: -12%;
-@xsh-handle-saturation: @xsh-cell-saturation;
-
-@xsh-icon-button-lightness: 60%;
-@xsh-icon-button-saturation: 45%;
-
-@xsh-bg-contrast-light: 0%;
-@xsh-bg-contrast-dark: 0%;
-@xsh-lines-contrast: 1.0;
 
 // Level Colors
-// -----------------------------------------------------------------------------
+@xsh-toonzraster-color: hsl(134, 25%, 33%);
+@xsh-raster-color: hsl(206, 25%, 42%);
+@xsh-vector-color: hsl(60, 25%, 39%);
+@xsh-fx-color: hsl(32, 23%, 34%);
+@xsh-palette-color: hsl(170, 27%, 38%);
+@xsh-sub-color: hsl(285, 20%, 36%);
+@xsh-mesh-color: hsl(246, 22%, 41%);
+@xsh-assistants-color: @xsh-palette-color;
+@xsh-reference-color: rgb(114, 114, 114);
 
-@xsh-toonzraster-color: hsl(146, 36%, 41%);
-@xsh-raster-color: hsl(207, 41%, 45%);
-@xsh-vector-color: hsl(60, 38%, 41%);
-@xsh-assistants-color: hsl(0, 35%, 41%);
-@xsh-notes-color: #cacaca;
-@xsh-notes-border-color: #848484;
-@xsh-notes-selected-cell-color: #ededed;
+// Notes
+@xsh-notes-color: #9e9e9e;
+@xsh-notes-border-color: darken(@xsh-notes-color, 22%);
+@xsh-notes-hl-color: mix(lighten(@xsh-notes-color, @xsh-hl-lighten-amount), @xsh-hl-mix-color, @xsh-hl-mix-amount);
 
-@xsh-reference-color: #6e6e6e;
-@xsh-reference-handle-color: darken(@xsh-reference-color, 10%);
-@xsh-reference-selected-color: lighten(@xsh-reference-color, 10%);
+// Sound Level
+@xsh-sound-color: @xsh-palette-color;
+@xsh-sound-track-color: hsl(0, 0%, 0%);
 
-@xsh-palette-color: hsl(170, 18%, 36%);
-@xsh-fx-color: hsl(30, 36%, 41%);
-@xsh-sub-color: hsl(300, 36%, 40%);
-@xsh-mesh-color: hsl(265, 37%, 40%);
-
-@xsh-sound-color: hsl(180, 38%, 40%);
-@xsh-sound-hl-color: #34FE5E;
-@xsh-sound-track-color: #000;
-@xsh-sound-preview-color: darken(@xsh-sound-track-color, 20);
-
-@xsh-camera-active-color: hsl(207, 65%, 39%);
-@xsh-camera-other-color: hsl(170, 47%, 38%);
-@xsh-table-color: hsl(230, 37%, 40%);
-@xsh-peg-color: hsl(30, 37%, 40%);
-
-@xsh-folded-column-bg-color: @ui-light8;
-@xsh-folded-column-line-color: @xsh-vertical-column-line-color;
+// Other
+@xsh-camera-active-color: hsl(209, 55%, 42%);
+@xsh-camera-other-color: hsl(179, 37%, 36%);
+@xsh-xsheet-color: hsl(240, 27%, 49%);
+@xsh-peg-color: hsl(30, 42%, 41%);
 
 // -----------------------------------------------------------------------------
-// Spreadsheet Separator Line Colors
+
+// Spreadsheet Lines
+@xsh-horizontal-row-line-color: rgba(0, 0, 0, min(max(0.3 * @xsh-border-contrast, 0), 1));
+@xsh-vertical-column-line-color: rgba(0, 0, 0, min(max(0.4 * @xsh-border-contrast, 0), 1));
+
+// Marker Lines
+@xsh-marker-line-color: rgba(255, 255, 255, 0.2);
+@xsh-selected-marker-line-color: rgba(255, 255, 255, 0.5);
+@xsh-sec-marker-line-color: rgba(255, 255, 255, 0.4);
+@xsh-current-time-indicator-color: hsl(0, 100%, 64%);
+
+// Folded Columns
+@xsh-folded-column-bg-color: rgba(255, 255, 255, 0.45);
+
 // -----------------------------------------------------------------------------
 
-@xsh-horizontal-cell-line-color-alpha: min(max(0.25 * @xsh-lines-contrast, 0), 1);
-@xsh-horizontal-cell-line-color: rgba(0, 0, 0, @xsh-horizontal-cell-line-color-alpha);
+// Spreadsheet Cells
+@xsh-empty-column-color: darken(@xsh-color, 5% * @xsh-contrast);
+@xsh-empty-column-range-color: @xsh-color;
+@xsh-empty-cell-color-selected: fade(mix(lighten(@xsh-empty-column-range-color, (@xsh-hl-lighten-amount * 2)), @xsh-hl-mix-color, @xsh-hl-mix-amount), 50%);
 
-@xsh-vertical-column-line-color-alpha: min(max(0.4 * @xsh-lines-contrast, 0), 1);
-@xsh-vertical-column-line-color: rgba(0, 0, 0, @xsh-vertical-column-line-color-alpha);
+@xsh-cell-text-color: rgba(255, 255, 255, 0.85);
+@xsh-cell-text-color-selected: rgba(@xsh-cell-text-color, 1.0);
 
-@xsh-marker-line-color: rgba(255, 255, 255, 0.22);
-@xsh-selected-marker-line-color: rgba(255, 255, 255, 0.45);
-@xsh-sec-marker-line-color: rgba(255, 255, 255, 0.3);
+@xsh-current-cell-border-color: cyan;
 
-@xsh-current-time-indicator-color: hsl(0, 100%, 65%);
-
-// -----------------------------------------------------------------------------
-// General Spreadsheet Colors
-// -----------------------------------------------------------------------------
-
-// Cell Text Colors
-@xsh-cell-text-color: rgba(white, 0.8);
-@xsh-selected-cell-text-color: rgba(@xsh-cell-text-color, 1.0);
-
-// Cell Areas
-@xsh-column-color: lighten(@ui-color, @xsh-bg-contrast-light);
-@xsh-empty-column-color: darken(@ui-dark2, @xsh-bg-contrast-dark);
-@xsh-selected-empty-area-color: rgba(white, 0.2);
-@xsh-current-cell-border-color: black;
-@xsh-keyframe-line-color: @xsh-cell-text-color;
-@xsh-level-end-color: @xsh-cell-text-color;
-@xsh-selected-column-border-color: rgba(white, 0.3);
-
-// Onion Skin Column Area
+// Onion Skin Area
 @xsh-onionskin-column-bg-color: @xsh-empty-column-color;
 
-// Frame Number Area
-@xsh-frame-row-bg-color: lighten(@ui-color, @xsh-bg-contrast-light);
-@xsh-frame-row-text-color: @xsh-cell-text-color;
-@xsh-play-range-row-bg-color: hsl(hue(@hl-color), 10%, 35%);
-@xsh-preview-frame-text-color: @normal-label-color;
-@xsh-current-frame-row-bg-color: @hl-color;
-@xsh-current-frame-text-color: white;
+// Framenumber Area
+@xsh-framenumber-column-text-color: @xsh-cell-text-color;
+@xsh-framenumber-column-bg-color: @xsh-color;
+
+@xsh-framenumber-column-range-text-color: @normal-label-color;
+@xsh-framenumber-column-range-bg-color: lighten(@xsh-framenumber-column-bg-color, 5% * @xsh-contrast);
+
+@xsh-framenumber-current-text-color: rgb(255, 255, 255);
+@xsh-framenumber-current-bg-color: @hl-color;
 
 // Column Header Colors
-@xsh-empty-column-head-color: @ui-color;
-@xsh-preview-button-bg-on-color: hsl(64, 41%, 55%);
-@xsh-camstand-button-bg-on-color: hsl(17, 50%, 60%);
-@xsh-lock-button-bg-on-color: rgba(255, 255, 255, 0.7);
-@xsh-config-button-bg-color: rgba(255, 255, 255, 0);
+@xsh-column-header-empty-color: @bg-color;
+@xsh-column-header-border-color: @border-color;
+@xsh-column-header-selected-color: fade(tint(@xsh-hl-mix-color, 70%), 50%);
+@xsh-column-header-dragbar-hl-color: @xsh-column-header-selected-color;
 
-@xsh-column-name-bg-color: transparent;
-@xsh-column-header-pastelizer-color: rgba(0, 0, 0, 0);
+@xsh-button-preview-bg-on-color: #C8C864;
+@xsh-button-camstand-bg-on-color: #EB906B;
+@xsh-button-lock-bg-on-color: @lock-color;
 
 // -----------------------------------------------------------------------------
-//
+
+// Icons
+@timeline-column-header-border-color: @border-color;
+
+@timeline-preview-button-bg-on-color: @bg-color;
+@timeline-preview-button-bg-off-color: @bg-color;
+
+@timeline-table-button-bg-on-color: @bg-color;
+@timeline-table-button-bg-off-color: @bg-color;
+
+@timeline-lock-button-bg-on-color: @bg-color;
+@timeline-lock-button-bg-off-color: @bg-color;
+
+@timeline-config-button-bg-color: @bg-color;
+
+@timeline-preview-icon: if(@xsh-mono-icons, 'timeline/preview_small.svg', 'timeline/preview_small-color.svg');
+@timeline-table-icon: if(@xsh-mono-icons, 'timeline/table_small.svg', 'timeline/table_small-color.svg');
+@timeline-table-trans-icon: if(@xsh-mono-icons, 'timeline/trans_small.svg', 'timeline/trans_small-color.svg');
+@timeline-preview-trans-icon: if(@xsh-mono-icons, 'timeline/preview_trans_small.svg', 'timeline/preview_trans_small-color.svg');
+
+// [node] ======================================================================
 //       ::::    :::  ::::::::  :::::::::  :::::::::: 
 //      :+:+:   :+: :+:    :+: :+:    :+: :+:         
 //     :+:+:+  +:+ +:+    +:+ +:+    +:+ +:+          
@@ -553,108 +580,55 @@
 //   +#+  +#+#+# +#+    +#+ +#+    +#+ +#+            
 //  #+#   #+#+# #+#    #+# #+#    #+# #+#             
 // ###    ####  ########  #########  ##########       
-//
 // -----------------------------------------------------------------------------
 
-// -----------------------------------------------------------------------------
-// Schematic Settings
+// SETTINGS --------------------------------------------------------------------
+
+@node-text-color: @xsh-cell-text-color;
+@node-viewer-bg-color: darken(@bg-color, 5% * @ui-contrast);
+
+// Use Xsheet values by default, add another value to tweak if required
+@node-lighten-amount: @xsh-cell-lighten-amount - 0%;
+@node-sat-amount: @xsh-cell-sat-amount + 0%;
+
 // -----------------------------------------------------------------------------
 
-// General
-@node-viewer-bg-color: @ui-dark2;
-@node-text-color: rgba(255, 255, 255, 0.9);
+// Nodes
 @node-selected-border-color: white;
 
-// Level Node Colors (raster, etc.)
-@node-lightness: 35%;
-@node-saturation: 20%;
+@node-table-color: @xsh-xsheet-color;
+@node-group-color: @xsh-camera-active-color;
+@node-spline-color: hsl(84, 64%, 34%);
+@node-normal-fx-color: hsl(211, 29%, 37%);
+@node-macro-fx-color: hsl(322, 20%, 37%);
+@node-image-adjust-fx-color: hsl(245, 19%, 38%);
+@node-layer-blending-fx-color: hsl(190, 28%, 32%);
+@node-matte-fx-color: hsl(0, 23%, 42%);
 
-// Stage Node Colors (peg, macro, etc.)
-@stage-node-lightness: 40%;
-@stage-node-saturation: 25%;
-
-// Output Node Colors (camera)
-@output-node-lightness: 45%;
-@output-node-saturation: 35%;
-
-// FX Settings Label Color
-@node-label-text-color: @normal-label-color;
-
-// -----------------------------------------------------------------------------
-// Node Colors
-// -----------------------------------------------------------------------------
-
-// XSheet Level Column Type Node Colors
-@node-toonzraster-color: hsl(hue(@xsh-toonzraster-color), @node-saturation, @node-lightness);
-@node-raster-color: hsl(hue(@xsh-raster-color), @node-saturation, @node-lightness);
-@node-vector-color: hsl(hue(@xsh-vector-color), @node-saturation, @node-lightness);
-@node-palette-color: hsl(hue(@xsh-palette-color), @node-saturation, @node-lightness);
-@node-reference-color: hsl(hue(@xsh-reference-color), 0%, @node-lightness);
-@node-mesh-color: hsl(hue(@xsh-mesh-color), @node-saturation, @node-lightness);
-@node-fx-color: hsl(hue(@xsh-fx-color), @stage-node-saturation, @stage-node-lightness);
-@node-sub-color: hsl(hue(@xsh-sub-color), @node-saturation, @node-lightness);
-@node-assistants-color: hsl(hue(@xsh-assistants-color), @node-saturation, @node-lightness);
-
-// FX Schematic Node Colors
-@node-normal-fx-color: hsl(190, @stage-node-saturation, @stage-node-lightness);
-@node-image-adjust-fx-color: hsl(245, @stage-node-saturation, @stage-node-lightness);
-@node-blending-fx-color: hsl(165, @stage-node-saturation, @stage-node-lightness);
-@node-matte-fx-color: hsl(0, @stage-node-saturation, @stage-node-lightness);
-@node-macro-fx-color: hsl(313, @stage-node-saturation, @stage-node-lightness);
-
-// Special Schematic Node Colors
-@node-passthrough-color: hsl(0, 0%, 75%);
-@node-group-color: hsl(210, @stage-node-saturation, @stage-node-lightness);
-@node-peg-color: hsl(hue(@xsh-peg-color), @stage-node-saturation, @stage-node-lightness);
-@node-motion-path-color: hsl(85, @stage-node-saturation, @stage-node-lightness);
-@node-xsheet-color: hsl(hue(@xsh-table-color), @output-node-saturation, @output-node-lightness);
-@node-table-color: @node-xsheet-color;
-
-// Camera and Output Colors
-@node-camera-active-color: hsl(hue(@xsh-camera-active-color), @output-node-saturation, @output-node-lightness);
-@node-camera-other-color: hsl(hue(@xsh-camera-other-color), @output-node-saturation, @output-node-lightness);
-
-// Spline Colors
-@node-link-color: rgb(228, 228, 228);
+// Splines
+@node-link-color: rgb(223, 223, 223);
 @node-selected-link-color: cyan;
 @node-motion-path-link-color: #94ee1e;
 @node-motion-path-selected-link-color: yellow;
 
-// Preview/Table Button Toggle Colors
-@node-preview-bg-on-color: @xsh-preview-button-bg-on-color;
-@node-preview-bg-off-color: @xsh-reference-color;
-@node-camstand-bg-on-color: @xsh-camstand-button-bg-on-color;
-@node-camstand-bg-off-color: @xsh-reference-color;
-
-// -----------------------------------------------------------------------------
-// Keyframe Colors
 // -----------------------------------------------------------------------------
 
-@keyframe-off-color: transparent;
-@keyframe-off-color-hover: @toolbutton-bg-color-hover;
-@keyframe-off-border-color: @keyframe-off-color;
-@keyframe-off-border-color-hover: @keyframe-off-color-hover;
-
-@keyframe-total-color: hsl(30, 50%, 50%);
+// Keyframes
+@keyframe-total-color: #e08a21;
 @keyframe-total-border-color: @keyframe-total-color;
-@keyframe-total-color-hover: lighten(@keyframe-total-color, 10);
-@keyframe-total-border-color-hover: @keyframe-total-color-hover;
+@keyframe-total-color-hover: lighten(@keyframe-total-color, 8% * @hover-adjust-amount);
+@keyframe-total-border-color-hover: @keyframe-total-border-color;
 
-@keyframe-partial-color: @keyframe-total-color;
-@keyframe-partial-color-hover: @keyframe-total-color-hover;
-@keyframe-partial-border-color: @keyframe-partial-color;
-@keyframe-partial-border-color-hover: @keyframe-partial-color-hover;
+@keyframe-inbetween-color: #807e75;
+@keyframe-inbetween-border-color: @keyframe-inbetween-color;
 
 // FX Settings Panel Only
 @keyframe-highlight-color: rgba(255, 255, 255, 0.3);
 @keyframe-highlight-border-color: @keyframe-highlight-color;
-@keyframe-inbetween-color: hsl(45, 15%, 50%);
-@keyframe-inbetween-border-color: @keyframe-inbetween-color;
-@keyframe-modified-color: hsl(65, 50%, 50%);
+@keyframe-modified-color: #1fb85f;
 @keyframe-modified-border-color: @keyframe-modified-color;
 
-// -----------------------------------------------------------------------------
-//
+// [fe] ========================================================================
 //       :::::::::: ::::::::: ::::::::::: ::::::::::: ::::::::  ::::::::: 
 //      :+:        :+:    :+:    :+:         :+:    :+:    :+: :+:    :+: 
 //     +:+        +:+    +:+    +:+         +:+    +:+    +:+ +:+    +:+  
@@ -662,51 +636,45 @@
 //   +#+        +#+    +#+    +#+         +#+    +#+    +#+ +#+    +#+    
 //  #+#        #+#    #+#    #+#         #+#    #+#    #+# #+#    #+#     
 // ########## ######### ###########     ###     ########  ###    ###      
-//
 // -----------------------------------------------------------------------------
 
-// Function Editor Spreadsheet Viewer
-@fe-text-color: @xsh-cell-text-color;
-@fe-cycle-color: @fe-text-color;
+// SETTINGS --------------------------------------------------------------------
 
-// Keyframe Color Settings
-@fe-keyframe-saturation: 40%;
-@fe-keyframe-lightness: 40%;
+@fe-text-color: white;
 
-@fe-keyframe-color: hsl(hue(@keyframe-total-color), @fe-keyframe-saturation, @fe-keyframe-lightness);
-@fe-inbetween-color: mix(@keyframe-inbetween-color, @xsh-empty-column-color, 60%);
-@fe-ignored-keyframe-color: rgb(172,42,57);
-@fe-selected-ignored-keyframe-color: lighten(@fe-ignored-keyframe-color, 25);
-@fe-ignored-inbetween-color: rgb(138,105,94);
-@fe-selected-ignored-inbetween-color: #000;
+@fe-kf-border-darken-amount: -31%;
+@fe-kf-border-sat-amount: 0%;
+@fe-kf-hl-lighten-amount: 37%;
+@fe-kf-hl-mix-amount: 100%;
+@fe-kf-hl-mix-color: @hl-color;
+
+@fe-ib-border-darken-amount: -62%;
+@fe-ib-border-sat-amount: 0%;
+@fe-ib-hl-lighten-amount: 22%;
+@fe-ib-hl-mix-amount: 90%;
+@fe-ib-hl-mix-color: @hl-color;
 
 // -----------------------------------------------------------------------------
+
+// Cell Colors
+@fe-keyframe-color: #925d24;
+@fe-ignored-keyframe-color: #ac2a39;
+@fe-inbetween-color: #666250;
+@fe-ignored-inbetween-color: #8a695e;
+
+@fe-empty-color: @xsh-empty-cell-color-selected;
+@fe-empty-range-color-selected: @xsh-empty-cell-color-selected;
+
+// -----------------------------------------------------------------------------
+
 // Curves Viewer
-// -----------------------------------------------------------------------------
+@fe-panel-line-color: white; // grid line color
+@fe-panel-line-tone: 12%; // strength of grid line color (0 = invisible)
 
-@fe-panel-bg-color: @ui-color;
-@fe-panel-value-line-color: @ui-dark2;
-@fe-panel-frame-line-color: @ui-dark5;
-@fe-panel-other-curves-color: @ui-light8;
-@fe-panel-ruler-bg-color: @ui-dark2;
 @fe-panel-text-color: @text-color;
-@fe-panel-sub-color: @ui-dark5;
-@fe-panel-selected-color: #FFA500;
+@fe-panel-bg-color: darken(@bg-color, 6% * @ui-contrast);
+@fe-panel-ruler-bg-color: darken(@fe-panel-bg-color, 4% * @ui-contrast);
 
-// -----------------------------------------------------------------------------
-// Graveyard
-// -----------------------------------------------------------------------------
-// These might be redundant, but they should be examined before removing, or
-// be given greater clarity as to what they are for.
-
-// Does nothing, remove this qproperty?
-@xsh-LightBG-color: lighten(@ui-color, 65.8824);
-
-// Does nothing, remove this qproperty?
-@xsh-DarkBG-color: lighten(@ui-color, 60.0000);
-
-// Does nothing, remove this qproperty?
-@xsh-DarkLine-color: lighten(@ui-color, 30.5882);
-
-// Does nothing, remove this qproperty?
-@node-VerticalLine-color: @xsh-vertical-column-line-color;
+@fe-panel-curve-color: rgba(255, 255, 255, 0.6); // all curves color
+@fe-panel-curve-color-hover: #FFA500; // when mouse over a curve
+@fe-panel-curve-keyframe-color: black; // the keyframe square handle

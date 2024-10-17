@@ -1,28 +1,33 @@
 // out: "../../../../Blue/Blue.qss"
 
+//! The above line is for EasyLESS (VSCode extension) compile output location
+
 // -----------------------------------------------------------------------------
 // BLUE THEME
 // -----------------------------------------------------------------------------
 
-// Imports
+// Theme to inherit/override
 @import '../default/default-theme.less';
 
-// -----------------------------------------------------------------------------
-// Config
-// -----------------------------------------------------------------------------
-
-// Is Dark Theme?
-@dark-theme: true;
-
-// Image Path (relative to where the Default.qss file output is)
+// Image path relative to where this *.qss is output
 @img-url: '../Default/imgs/white';
 
-// Interface Colors
-@ui-color: hsl(216, 4%, 28%);
-@hl-color: hsl(216, 56%, 57%);
+// SETTINGS --------------------------------------------------------------------
+
+// >>> Inherit other settings from Neutral.less
+
+@ui-contrast: 1.4; // multiplier
+
+// COLORS ----------------------------------------------------------------------
+
+@bg-color: #43464d;
 
 // -----------------------------------------------------------------------------
-// Overrides
+// Titlebar
 // -----------------------------------------------------------------------------
+@titlebar-text-color-active: rgb(118, 178, 255);
 
-@title-text-color-active: rgb(128, 192, 255);
+// -----------------------------------------------------------------------------
+// Viewer
+// -----------------------------------------------------------------------------
+@flipmarker-img: 'flipslider/flipmarker-blue.svg';

@@ -1,46 +1,65 @@
 // out: "../../../../Dark/Dark.qss"
 
+//! The above line is for EasyLESS (VSCode extension) compile output location
+
 // -----------------------------------------------------------------------------
 // DARK THEME
 // -----------------------------------------------------------------------------
 
-// Imports
+// Theme to inherit/override
 @import '../default/default-theme.less';
 
-// -----------------------------------------------------------------------------
-// Config
-// -----------------------------------------------------------------------------
-
-// Is Dark Theme?
-@dark-theme: true;
-
-// Image Path (relative to where the Default.qss file output is)
+// Image path relative to where this *.qss is output
 @img-url: '../Default/imgs/white';
 
-// Adjust Shading
-@bg-contrast-dark: 0.8;
-@border-contrast-dark: 1.7%;
-@border-contrast-light: 1.0%;
+// SETTINGS --------------------------------------------------------------------
 
-// Interface Colors
-@ui-color: rgb(48, 48, 48);
-@hl-color: rgb(45, 114, 182);
+// >>> Inherit other settings from Default.less
 
-// -----------------------------------------------------------------------------
-// Overrides
-// -----------------------------------------------------------------------------
+@ui-contrast: 1.2; // multiplier
+@border-contrast: 1.4; // multiplier
 
-@input-border-color: @ui-light5;
-@tree-bg-color-alt-row: rgba(255, 255, 255, 0.03);
-@slider-groove-img: url('@{img-url}/dark-theme/slider-groove.svg');
-@flipmarker-img: 'dark-theme/flipmarker.svg';
-@flipslider-img: 'dark-theme/flipslider.svg';
+// COLORS ----------------------------------------------------------------------
+
+@bg-color: #303030;
+@text-color: #dcdcdc; 
+@hl-color: #4570b8;
 
 // -----------------------------------------------------------------------------
-// X-Sheet Overrides
+// Treeview
+// -----------------------------------------------------------------------------
+@tree-bg-color-alt-row: rgba(0, 0, 0, 0.2);
+
+// -----------------------------------------------------------------------------
+// Viewer
+// -----------------------------------------------------------------------------
+@flipmarker-img: 'flipslider/flipmarker-dark.svg';
+@flipslider-img: 'flipslider/flipslider-dark.svg';
+@flipslider-base-color: darken(@bg-color, 15% * @ui-contrast);
+
+// -----------------------------------------------------------------------------
+// Sliders
+// -----------------------------------------------------------------------------
+@slider-groove-img: 'slider/slider-groove-dark.svg';
+@slider-groove-color: darken(@bg-color, 25% * @ui-contrast);
+
+// -----------------------------------------------------------------------------
+// X-Sheet
 // -----------------------------------------------------------------------------
 
-@xsh-bg-contrast-dark: -4%;
-@xsh-bg-contrast-light: 4%;
-@xsh-lines-contrast: 1.4;
-@xsh-play-range-row-bg-color: hsl(hue(@hl-color), 8%, 30%);
+// SETTINGS --------------------------------------------------------------------
+
+@xsh-color: lighten(@bg-color, 4%);
+
+@xsh-border-contrast: 1.2;
+
+@xsh-cell-lighten-amount: -2%;
+@xsh-cell-sat-amount: -2%;
+
+// -----------------------------------------------------------------------------
+// Function Editor
+// -----------------------------------------------------------------------------
+
+// Curves Viewer
+@fe-panel-line-tone: 10%;
+@fe-panel-bg-color: lighten(@bg-color, 3%);

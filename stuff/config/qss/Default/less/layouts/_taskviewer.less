@@ -14,9 +14,13 @@
 
 #Tasks {
   & QToolBar {
-    border-bottom: 1 solid @dark-border-color;
+    border-bottom: 1 solid @border-color;
     margin: 0;
     padding: 0;
+
+    &::separator:horizontal {
+      margin: 0 0 1 0; // 1 bottom margin prevents overlapping Toolbar border
+    }
 
     & QToolButton {
       margin: 2 2 3 2;

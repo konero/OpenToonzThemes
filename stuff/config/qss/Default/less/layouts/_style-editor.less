@@ -4,7 +4,7 @@
 
 #StyleEditor {
   & #bottomWidget {
-    border-top: 1 solid @dark-border-color;
+    border-top: 1 solid @border-color;
     padding: 3 2 8 3;
     
     & QPushButton {
@@ -16,7 +16,7 @@
 //#StyleEditorTabBar {}
 
 #HexagonalColorWheel {
-  qproperty-BGColor: @ui-color;
+  qproperty-BGColor: @bg-color;
 }
 
 #StyleChooserPage {
@@ -65,23 +65,23 @@
 }
 
 #colorSliderAddButton {
-  image: url('@{img-url}/scroll-right.svg');
+  image: url('@{img-url}/scrollbar/scroll-right.svg');
 
   &:hover {
-    image: url('@{img-url}/scroll-right-hover.svg');
+    image: url('@{img-url}/scrollbar/scroll-right-hover.svg');
   }
 }
 
 #colorSliderSubButton {
-  image: url('@{img-url}/scroll-left.svg');
+  image: url('@{img-url}/scrollbar/scroll-left.svg');
 
   &:hover {
-    image: url('@{img-url}/scroll-left-hover.svg');
+    image: url('@{img-url}/scrollbar/scroll-left-hover.svg');
   }
 }
 
 #PlainColorPageParts {
-  border-bottom: 1 solid @dark-border-color;
+  border-bottom: 1 solid @border-color;
 
   & QLineEdit {
     max-width: 35;
@@ -89,6 +89,6 @@
   }
 }
 
-// #todo: redundant?
+// The following unused?
 //#colorSliderLabel, 
 //#colorSliderField {}

@@ -11,10 +11,10 @@ PencilTestPopup {
 // #HistoryPanel {}
 
 #MatchLineButton {
-  background-color: lighten(@ui-color, 15);
+  background-color: lighten(@bg-color, 15);
 
   &:checked {
-    background-color: lighten(@ui-color, 30);
+    background-color: lighten(@bg-color, 30);
     border: 2 solid @hl-color;
     border-radius: 2;
   }
@@ -40,11 +40,11 @@ PencilTestPopup {
   }
 
   & #TabBarContainer {
-    margin-left: -4; // reset left edge margin (#todo: likely doesn't work)
+    margin-left: -4; // might not work
   }
 
   & #bottomWidget {
-    border-top: 1 solid @dark-border-color;
+    border-top: 1 solid @border-color;
     padding: 3 2 8 3;
 
     & QPushButton {
@@ -69,7 +69,7 @@ PencilTestPopup {
     padding: 3;
     
     &:hover {
-      background: lighten(@ui-color, 10);
+      background: lighten(@bg-color, 10);
     }
 }
 

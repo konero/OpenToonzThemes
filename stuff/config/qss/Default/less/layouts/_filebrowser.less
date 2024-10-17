@@ -5,8 +5,8 @@
 // Left pane
 #DirTreeView {
   background-color: @tree-bg-color;
-  alternate-background-color: @tree-bg-color-alt-row;
-  border: 1 solid @dark-border-color;
+  alternate-background-color: @tree-bg-color;
+  border: 1 solid @border-color;
   border-right: 0; // sits against QSplitter here, no need for border
 
   &::branch {
@@ -16,29 +16,30 @@
 
 // Right pane
 #FileBrowser { // outer area
-  background-color: @filebrowser-bg-color;
+  background-color: @browser-window-bg-color;
   
   & #buttonBar {
+    background-color: @browser-window-bg-color;
     & QToolButton {
       .tool-button-style(2, 2, 2, 2);
     }
   }
 
   & #castFrame {
-    border: 1 solid @dark-border-color;
+    border: 1 solid @border-color;
     border-left: 0; // sits against QSplitter here, no need for border
     margin: 0;
   }
 
   & QSplitter::handle:horizontal {
-    border-top: 1 solid @dark-border-color;
-    border-bottom: 1 solid @dark-border-color;
+    border-top: 1 solid @border-color;
+    border-bottom: 1 solid @border-color;
   }
 }
 
 DvItemViewerPanel { // contents
-  background-color: @tree-bg-color;
-  qproperty-TextColor: @text-color;
+  background-color: @browser-right-pane-bg-color;
+  qproperty-TextColor: @browser-text-color;
   qproperty-AlternateBackground: @tree-bg-color-alt-row;
   qproperty-SelectedTextColor: @hl-text-color;
   qproperty-FolderTextColor: @browser-folder-text-color;
@@ -64,14 +65,14 @@ DvItemViewerTitleBar { // column headers
 }
 
 StyledTreeView {
-  qproperty-TextColor: @text-color;
+  qproperty-TextColor: @browser-text-color;
   qproperty-SelectedTextColor: @hl-text-color;
   qproperty-SelectedItemBackground: @hl-color;
   qproperty-FolderTextColor: @browser-folder-text-color;
   qproperty-SelectedFolderTextColor: @browser-folder-text-color-selected;
   alternate-background-color: @tree-bg-color-alt-row;
   background-color: @tree-bg-color;
-  border: 1 solid @dark-border-color;
+  border: 1 solid @border-color;
 }
 
 #FileDoesNotExistLabel {
@@ -84,13 +85,11 @@ StyledTreeView {
 
 #SceneCast {
   & QToolBar {
-    border-top: 1 solid @dark-border-color;
+    border-top: 1 solid @border-color;
 
     &::separator {
       &:horizontal {
-        margin-left: 2;
-        margin-right: 0;
-        margin-bottom: 0;
+        margin: 1 0 0 2; // 1 top margin prevents overlapping Toolbar border
       }
     }
   }
@@ -107,5 +106,5 @@ StyledTreeView {
 }
 
 #CastBrowserFolderName {
-  border-bottom: 1 solid @dark-border-color;
+  border-bottom: 1 solid @border-color;
 }
